@@ -1,0 +1,8 @@
+:root {
+  --main-color: paleturquoise;
+  --deep-color: rgb(61, 177, 177);
+  --main-text-color: black;
+  --deep-text-color: white;
+  --sep-color: rgba(88, 88, 88, 0.472);
+  --well-color: rgba(101, 163, 163, 0.281);
+}

@@ -1,0 +1,8 @@
+:root {
+  --main-color: gold;
+  --deep-color: rgb(158, 114, 4);
+  --main-text-color: black;
+  --deep-text-color: white;
+  --sep-color: rgba(104, 104, 104, 0.808);
+  --well-color: rgba(211, 183, 27, 0.726);
+}

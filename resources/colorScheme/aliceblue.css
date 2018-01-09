@@ -1,0 +1,8 @@
+:root {
+  --main-color: aliceblue;
+  --deep-color: #707070;
+  --main-text-color: black;
+  --deep-text-color: black;
+  --sep-color: rgba(88, 88, 88, 0.472);
+  --well-color: hsla(0, 3%, 72%, 0.473);
+}

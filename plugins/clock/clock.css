@@ -1,0 +1,26 @@
+@font-face{
+  font-family: 'digital-clock-font';
+  src: url('./digital-7.ttf');
+ }
+
+.clockgrid {
+  height: auto;
+  width: 100%;
+
+}
+.clockpanel {
+  margin-left: 4%;
+  margin-right: 4%;
+  width: 40%;
+  float: left;
+}
+.clocklabel {
+
+}
+.clock {
+  font-size: 35px;
+  font-family: 'digital-clock-font';
+}
+.floatclear {
+  clear: left;
+}

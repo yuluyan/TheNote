@@ -1,0 +1,22 @@
+!notecolor 7
+magnetic
+#ul
+吸住之后应该容忍更大的鼠标偏移，一直保持在这个边上
+吸住一边之后沿着边移动，无法吸住垂直的边
+#
+bug:
+#ul
+标题不能带有 " ' 等
+关闭之后不能show hide  解决
+设置总是在上 解决
+只能开一次   解决
+最小化后show没用  解决
+#
+中文字体
+修改textrender 支持行内格式
+plugin
+#ul
+天气
+Hour 爬虫
+craiglist 爬虫
+#

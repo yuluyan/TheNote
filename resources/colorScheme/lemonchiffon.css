@@ -1,0 +1,8 @@
+:root {
+  --main-color: lemonchiffon;
+  --deep-color: rgb(189, 183, 118);
+  --main-text-color: black;
+  --deep-text-color: white;
+  --sep-color: rgba(88, 88, 88, 0.472);
+  --well-color: rgba(201, 195, 149, 0.452);
+}

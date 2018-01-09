@@ -1,0 +1,8 @@
+:root {
+  --main-color: hotpink;
+  --deep-color: rgb(214, 45, 129);
+  --main-text-color: black;
+  --deep-text-color: white;
+  --sep-color: rgba(226, 226, 226, 0.808);
+  --well-color: rgba(211, 36, 123, 0.384);
+}

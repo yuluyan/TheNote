@@ -1,0 +1,63 @@
+!h2 Welcome to TheNote by Luyan Yu!
+TheNote is a desktop note keeper with everything you want... and more! Please read on to find out what TheNote can do.
+
+!sep 2
+!h3 Introduction
+!h4 Edit mode
+TheNote is pure text with special syntax. Double click or press Enter to enter edit mode. To exit edit mode, press Esc or click everywhere else.
+
+!sep
+!h4 text
+You can use TheNote as a regular note keeper, e.g.,
+2018.1.1 Museum Day
+May 3rd 5:00pm lecture
+
+!sep 2
+!h3 Command
+Commands are used to modify note in a non-text way. There are two types of command, block and inline. 
+
+!h4 Inline command
+Inline command starts with !, e.g. !sep. Inline command can usually followed by arguments, e.g., !sep n draws n separator. Some inline commands can include particular files:
+!htmlfile customs/html.html
+!jsfile customs/js.js
+!cssfile customs/css.css
+For help of an inline command, you can use !help to get information:
+!help help
+
+!sep
+!h4 block command
+Block command starts with # followed by command name and ends with closing #, e.g.:
+#well
+I am some important text in a well.
+#
+Some block commands can be used to write short html or js, e.g.:
+#html
+<p style="color: darkred">I am from an html block.</p>
+#
+
+!sep
+!h4 Escape
+In the case you want a ! or # at the beginning of a line, use \ to escape them, e.g.,
+\! escape !
+
+!sep 2
+!h3 Plugin
+Plugins are small widgets written with html, js and css. You can include plugins with !plugin, e.g.,
+!plugin clock
+
+!sep 2
+!h3 Color
+You can change the color scheme by !notecolor command. See the help of this command:
+!help notecolor
+You can try un-escape the following command:
+\!notecolor burlywood
+\!notecolor 15
+\!notecolor random
+
+!sep 2
+!h3 Refresh
+Press F5 to refresh the note. Useful for plugin development and some commands like \notecolor random.
+
+!sep 2
+!h3 System tray
+In the system tray, you can create or delete notes with TheNote icon. Button at the top right corner of each note is a hide button. It does not delete notes.

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <style>
+    :root {
+      --main-color: aliceblue;
+      --deep-color: #707070;
+      --main-text-color: black;
+      --deep-text-color: black;
+      --sep-color: rgba(88, 88, 88, 0.472);
+      --well-color: hsla(0, 3%, 72%, 0.473);
+      --main-font: Calibri, Microsoft YaHei;
+      --title-fontsize: 40px;
+      --content-fontsize: 20px;
+    }
+    html {
+      height: 100%;
+    }
+    .notebody {
+      background-color: var(--main-color);
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+    .titlebar {
+      -webkit-user-select: none;
+      -webkit-app-region: no-drag;
+      cursor: move;
+      float: left;
+      width: 100%;
+    }
+    .titlebarblur {
+      background-color: var(--main-color);
+      color: var(--main-text-color);
+    }
+    .titlebarfocus {
+      background-color: var(--deep-color);
+      color: var(--deep-text-color);
+    }
+    .measuretitle {
+      font-size: var(--title-fontsize);
+      font-family: var(--main-font);
+      font-weight: bold;
+      margin-left: 5%;
+      width: auto;
+      position: absolute;
+      visibility: hidden;
+      white-space: nowrap;
+    }
+    .dragarea {
+      overflow: hidden;
+      cursor: move;
+    }
+    .title {
+      -webkit-app-region: no-drag;
+      font-size: var(--title-fontsize);
+      font-family: var(--main-font);
+      font-weight: bold;
+      margin-left: 5%;
+      float: left;
+      width: auto;
+      display: block;
+    }
+    .titlebox {
+      -webkit-app-region: no-drag;
+      font-size: var(--title-fontsize);
+      font-family: var(--main-font);
+      font-weight: bold;
+      margin-left: 5%;
+      float: left;
+      width: 70%;
+      display: none;
+      background-color: var(--deep-color);
+      color: var(--deep-text-color);
+      border: 0 none #FFF;
+      outline: none;
+    }
+    .clossbutton {
+      -webkit-app-region: no-drag;
+      float: right;
+      width: 45px;
+    }
+    .closecross {
+      font-size: calc(var(--title-fontsize) - 5px);
+      cursor: pointer;
+      display: block;
+    }
+    .titlesep {
+      height: 8px;
+      clear: left;
+      padding-bottom: 4px;
+    }
+    .editor {
+      display: none;
+      width: 95%;
+      height: 90%;
+      margin-left: 5%;
+    }
+    .textbox {
+      background-color: var(--main-color);
+      width: 99%;
+      height: 95%;
+      border: 0;
+      font-family: var(--main-font);
+      font-size: var(--content-fontsize);
+      resize: none;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+    .textbox:focus {
+      border: 0 none #FFF;
+      overflow-y: auto;
+      overflow-x: hidden;
+      outline: none;
+    }
+    .notecontainer {
+      background-color: var(--main-color);
+      color: var(--main-text-color);
+      margin-left: 5%;
+      padding-right: 5%;
+      height: 85%;
+      font-family: var(--main-font);
+      font-size: var(--content-fontsize);
+      overflow-y: auto;
+      overflow-x: hidden;
+      word-wrap: break-word;
+    }
+    .contentsep {
+      background-color: var(--sep-color);
+      height: 1px;
+      width: 100%;
+      margin-bottom: 3px;
+      margin-top: 3px;
+    }
+    .windowid {
+      display: none;
+    }
+    .well {
+      width: inherit;
+      margin: 2%;
+      padding-left: 2%;
+      padding-right: 2%;
+      padding-top: 1px;
+      padding-bottom: 1px;
+      border-radius: 6px;
+      background-color: var(--well-color)
+    }
+  </style>
+  <head>
+    <meta charset="UTF-8">
+    <title>Smart Note</title>
+  </head>
+  <body class="notebody">
+    <div id="titlebar" class="titlebar titlebarfocus">
+      <input type="text" id="titlebox" class="titlebox">
+      <div id="title" class="title"></div>
+      <div id="dragarea" class="dragarea"></div>
+      <div id="closebutton" class="clossbutton"><div id="closecross" class="closecross">&#128469</div></div>
+    </div>
+    <div class="titlesep"></div>
+    <div id="editor" class="editor">
+      <textarea id="textbox" class="textbox"></textarea>
+    </div>
+    <div id="notecontainer" class="notecontainer"></div>
+    <div id="measuretitle" class="measuretitle">xxx</div>
+    <div id="windowid" class="windowid"></div>
+  </body>
+  <script src="note.js"></script>
+</html>

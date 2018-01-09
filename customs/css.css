@@ -1,0 +1,14 @@
+#demoWrap {
+  width: 80%
+}
+#demoButton {
+  font-style: italic;
+  float: right;
+}
+#demoDiv {
+  font-style: italic;
+  float: left
+}
+#clearer {
+  clear: left
+}

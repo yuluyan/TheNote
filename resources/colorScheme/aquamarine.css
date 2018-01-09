@@ -1,0 +1,8 @@
+:root {
+  --main-color: aquamarine;
+  --deep-color: rgb(0, 77, 51);
+  --main-text-color: black;
+  --deep-text-color: white;
+  --sep-color: rgba(88, 88, 88, 0.472);
+  --well-color: rgba(119, 206, 177, 0.616);
+}

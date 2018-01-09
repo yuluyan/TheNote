@@ -1,0 +1,8 @@
+:root {
+  --main-color: mediumpurple;
+  --deep-color: rgb(123, 73, 221);
+  --main-text-color: black;
+  --deep-text-color: white;
+  --sep-color: rgba(223, 223, 223, 0.788);
+  --well-color: rgba(172, 139, 238, 0.555);
+}
