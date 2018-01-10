@@ -5,9 +5,12 @@ const config = require('./config.js')
 const interpreter = require('./interpreter.js') // Note interpreter
 
 // Close
-var closeNote = () => {
+var closeNote = (e) => {
+  e.preventDefault()
+  e.stopPropagation()
   var window = remote.getCurrentWindow()
-  if (window.isFocused()) {
+  if (closecross.style.display === 'block') {
+    console.log(window.isFocused())
     ipcRenderer.send('hideClicked', {
       id: getWindowId(),
     })

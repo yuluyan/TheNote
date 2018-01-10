@@ -92,7 +92,7 @@ var loadNote = (noteConfig) => {
     maximizable: false,
     fullscreenable: false,
     alwaysOnTop: noteConfig.ontop,
-    minWidth: 300, minHeight: 200,
+    minWidth: 300, minHeight: 150,
   })
   win.loadURL(url.format({
     pathname: path.join(__dirname, 'src/template.html'),
