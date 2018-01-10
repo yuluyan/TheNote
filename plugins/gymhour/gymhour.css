@@ -1,0 +1,21 @@
+#gymhourwrap {
+}
+#gymhour {
+  float: none;
+}
+#gymhourexplain {
+  float: none;
+}
+#gymstart {
+  float: none;
+}
+#gymend {
+  float: none;
+}
+#gymstatus {
+  font-weight: bold;
+  float: none;
+}
+#gymclear {
+  clear:none
+}

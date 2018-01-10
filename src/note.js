@@ -296,8 +296,13 @@ var moveCalc = (e) => {
     newWinPos[0] = e.screenX - mouseWindowPos[0];
     newWinPos[1] = e.screenY - mouseWindowPos[1];
     var calc = ipcRenderer.sendSync('moving', {id: getWindowId(), pos: newWinPos})
+    var size = remote.getCurrentWindow().getSize()
     try {
       remote.getCurrentWindow().setPosition(calc.pos[0], calc.pos[1]);
+      remote.getCurrentWindow().setSize(size[0], size[1]);
+      if (calc.attracted) {
+        //updateMousePos(e)
+      }
     } catch (err) {
       console.log(err);
     }

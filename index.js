@@ -71,6 +71,8 @@ var testpath = (path) => {
 //testpath('./../../../saves/catalog.json')
 */
 
+
+
 var magnetic = require('./src/magnetic.js')
 
 let tray = null
@@ -112,7 +114,6 @@ var loadNote = (noteConfig) => {
 
   win.once('ready-to-show', () => {
     win.show()
-
     if (dev__) {
       win.webContents.openDevTools()
     }
@@ -409,7 +410,7 @@ var moveMagnetic = (id, newPos) => {
     if (lastPosArrayArray[id].length < magnetic.trajectoryLength) {
       // keep moving
       lastPosArrayArray[id].push(newPos)
-      return newPos
+      return {pos: newPos, attracted: false}
     } else {
       lastPosArrayArray[id].push(newPos)
       var psArray = []
@@ -430,11 +431,11 @@ var moveMagnetic = (id, newPos) => {
         traj = lastPosArrayArray[id]
       }
       var calcPos = magnetic.calc(psArray, traj, movedWin.getSize())
-      return calcPos
+      return {pos: calcPos, attracted: true}
     }
   } else {
     console.log('move win error')
-    return [0, 0]
+      return {pos: [0, 0], attracted: false}
   }
 }
 
@@ -474,8 +475,14 @@ ipcMain.on('devtool', (e, msg) => {
 ipcMain.on('moving', (e, msg) => {
   var movedWinId = msg.id
   var movedPos = msg.pos
-  var calcPos = moveMagnetic(movedWinId, movedPos)
-  e.returnValue = {pos: calcPos}
+  var calcPos
+  //if (Number.isInteger(electron.screen.getPrimaryDisplay().scaleFactor)) {
+  if (true) {
+    calcPos = moveMagnetic(movedWinId, movedPos)
+  } else {
+    calcPos = {pos: movedPos, attracted: false}
+  }
+  e.returnValue = calcPos
 })
 
 ipcMain.on('hideClicked', (e, msg) => {
