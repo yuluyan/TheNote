@@ -18,15 +18,13 @@ var interpreter = (text) => {
       break
     }
   }
-  debug(textArray)
 
   var lineCount = textArray.length
-  debug(lineCount)
   var resultArray = []
   var tempLine
   for (var i = 0; i < lineCount; i++) {
     tempLine = textArray[i].trim()
-    debug(tempLine)
+    var commandLineNumber = i + 1
     if (isCommandStart(tempLine)) {
       // Process command line
       var commandType = tempLine.slice(1)
@@ -43,14 +41,13 @@ var interpreter = (text) => {
       if (!isReachCommandEnd) {
         commandBlock.push(new ErrorInfo('syntax', 'Missing closing # for #' + commandType))
       }
-      resultArray.push(renderBlockCommand(commandType, commandBlock))
+      resultArray.push(renderBlockCommand(commandType, commandBlock, commandLineNumber))
     } else if (isInlineCommand(tempLine)) {
-      debug(tempLine)
       var commandType = tempLine.slice(1)
-      resultArray.push(renderInlineCommand(commandType))
+      resultArray.push(renderInlineCommand(commandType, commandLineNumber))
     } else {
       // Process normal text
-      resultArray.push(renderText(tempLine))
+      resultArray.push(renderText(tempLine, commandLineNumber))
     }
   }
   
@@ -95,7 +92,7 @@ var isEscapedText = (line) => {
 }
 
 // Renderers
-var renderBlockCommand = (commandLine, block) => {
+var renderBlockCommand = (commandLine, block, commandLineNumber) => {
   var renderResult = {
     html: '',
     js: '',
@@ -115,15 +112,15 @@ var renderBlockCommand = (commandLine, block) => {
 
   const supportedBlockCommand = Object.keys(command.block)
   if (supportedBlockCommand.includes(commandType)) {
-    command.block[commandType].exec(err, renderResult, block, commandArray)
+    command.block[commandType].exec(err, renderResult, block, commandArray, commandLineNumber)
   } else {
     // no such command
-    command.block.default.exec(err, renderResult, block, [commandType])
+    command.block.default.exec(err, renderResult, block, [commandType], commandLineNumber)
   }
   return renderResult
 }
 
-var renderInlineCommand = (commandLine) => {
+var renderInlineCommand = (commandLine, commandLineNumber) => {
   var renderResult = {
     html: '',
     js: '',
@@ -146,25 +143,25 @@ var renderInlineCommand = (commandLine) => {
   if (supportedInlineCommand.includes(commandType)) {
     const argc = command.inline[commandType].argc
     if (argc === 'any' || argc.includes(commandArray.length)) {
-      command.inline[commandType].exec(renderResult, commandArray, commandRest)
+      command.inline[commandType].exec(renderResult, commandArray, commandRest, commandLineNumber)
     } else {
       var err = new ErrorInfo('command', commandType + ' accepts ' + argc.join(', ') + ' argument(s).')
       renderResult.html = err.toHTML()
     }
   } else {
     // no such command
-    command.inline.default.exec(renderResult, [commandType])
+    command.inline.default.exec(renderResult, [commandType], '', commandLineNumber)
   }
 
   return renderResult
 }
 
-var renderText = (textLine) => {
+var renderText = (textLine, commandLineNumber) => {
   if (isEscapedText(textLine)) {
     textLine = textLine.slice(1)
   }
   return {
-    html: '<p>' + textLine + '</p>',
+    html: '<p data-linenumber=' + commandLineNumber + '>' + textLine + '</p>',
     js: ''
   }
 }

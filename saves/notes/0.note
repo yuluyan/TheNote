@@ -25,7 +25,7 @@ For help of an inline command, you can use !help to get information:
 !help help
 
 !sep
-!h4 block command
+!h4 Block command
 Block command starts with # followed by command name and ends with closing #, e.g.:
 #well
 I am some important text in a well.
@@ -34,6 +34,11 @@ Some block commands can be used to write short html or js, e.g.:
 #html
 <p style="color: darkred">I am from an html block.</p>
 #
+
+!sep
+!h4 Command list
+You can view all the command by !commandlist:
+!commandlist
 
 !sep
 !h4 Escape

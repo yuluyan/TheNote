@@ -59,31 +59,48 @@ var confirmTitle = () => {
 }
 
 // Edit content
-var editContent= () => {
+var editContent = (lineNumber) => {
   var notecontainer = document.getElementById('notecontainer')
   var editor = document.getElementById('editor')
   var textbox = document.getElementById('textbox')
   editor.style.display = 'block'
   notecontainer.style.display = 'none'
   textbox.focus()
+  var charNumberStart = (lineNumber === 1 ? 0 : (textbox.value.split('\n').slice(0, lineNumber - 1).join('\n').length + 1))
+  var charNumberEnd = textbox.value.split('\n').slice(0, lineNumber).join('\n').length
+  //console.log([lineNumber, charNumberStart, charNumberEnd])
+  var tempSave = textbox.value.substr(charNumberStart)
+  textbox.value = textbox.value.substr(0, charNumberStart)
+  textbox.scrollTop = textbox.scrollHeight;
+  textbox.value += tempSave
+  textbox.setSelectionRange(charNumberStart, charNumberEnd)
+  
 }
 
 // Confirm content change
 var confirmContent = () => {
   var notecontainer = document.getElementById('notecontainer')
   var editor = document.getElementById('editor')
-  if (editor.style.display == 'none') return
-  var textbox = document.getElementById('textbox')
-  editor.style.display = 'none'
+  if (editor.style.display === 'block') {
+    var textbox = document.getElementById('textbox')
+    editor.style.display = 'none'
+  
+    notecontainer.style.display = 'block'
+    updateContentFromTextbox()
+    window.scrollTo(0, 0)
+  
+    ipcRenderer.send('content-change', {
+      id: getWindowId(),
+      value: textbox.value
+    })
+  }
 
-  notecontainer.style.display = 'block'
-  updateContentFromTextbox()
-  window.scrollTo(0, 0)
-
-  ipcRenderer.send('content-change', {
-    id: getWindowId(),
-    value: textbox.value
-  })
+  var noteItemList = notecontainer.children
+  for(var i = 0; i < noteItemList.length; i++) {
+    noteItemList[i].addEventListener('dblclick', (e) => {
+      editContent(parseInt(e.target.getAttribute('data-linenumber')))
+    })
+  }
 }
 
 // When focus
@@ -245,7 +262,7 @@ var bodyCatchKey = (e) => {
   if (keyCode === 13) { // enter
     if (document.getElementById('editor').style.display == 'none') {
       e.preventDefault()
-      editContent()
+      editContent(1)
     }
     return false;
   }
@@ -272,7 +289,15 @@ document.getElementById('closecross').addEventListener('click', closeNote)
 document.getElementById('title').addEventListener('click', confirmContent)
 document.getElementById('title').addEventListener('dblclick', editTitle)
 document.getElementById('notecontainer').addEventListener('click', confirmTitle)
-document.getElementById('notecontainer').addEventListener('dblclick', editContent)
+document.getElementById('notecontainer').addEventListener('click', (e) => {
+  if (e.detail === 3) editContent(1)}
+)
+var noteItemList = document.getElementById('notecontainer').children
+for(var i = 0; i < noteItemList.length; i++) {
+  noteItemList[i].addEventListener('dblclick', (e) => {
+    editContent(parseInt(e.target.getAttribute('data-linenumber')))
+  })
+}
 
 
 
