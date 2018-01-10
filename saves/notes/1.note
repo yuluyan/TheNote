@@ -1,14 +1,14 @@
 !notecolor 7
 BUG:
 #ul
-吸住之后应该容忍更大的鼠标偏移，一直保持在这个边上
-吸住一边之后沿着边移动，无法吸住垂直的边
-标题不能带有 " ' 等
-最小化按钮在非focus情况下可用
+吸住后应容忍更大的鼠标偏移
+吸住后沿边移动应吸住垂直的边
+标题不能带有 " '
+非focus情况禁用最小化按钮
 #
 TODO:
 !checkbox 修改textrender支持行内格式
-!checkbox 新建note判断当前位置有无note
+!checkbox 新建判断当前位置有无note
 plugin
 #ul
 天气
