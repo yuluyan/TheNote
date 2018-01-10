@@ -1,5 +1,5 @@
 const path = require('path')
-var build = false
+var build = true
 var config
 if (!build) {
   config = {

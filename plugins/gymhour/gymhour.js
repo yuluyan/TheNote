@@ -8,7 +8,7 @@ var gymhourTimeout
 var initializeGymhour = () => {
   var gymhourUrl = 'https://www.utrecsports.org/hours'  
   gymhourRountine(gymhourUrl)
-  clearTimeout(gymhourRountine)
+  clearTimeout(gymhourTimeout)
 }
 
 
