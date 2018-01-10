@@ -274,6 +274,16 @@ var command = {
         res.html = "<" + type + ">" + string + "</" + type + ">"
       }
     },
+    checkbox: {
+      argc: 'any',
+      desp: 'Insert check box.',
+      usage: '!checkbox string',
+      exec: (res, args) => {
+        var string = args.join(' ')
+        var id = uniqueID()
+        res.html = '<input type="checkbox" id="' + id + '">' + '<label style="cursor: pointer;" for="' + id + '">' + string + '</label>'
+      }
+    },
 
     // get command usage
     help: {
@@ -340,5 +350,18 @@ function ErrorInfo (errType, errMessage) {
     return w.charAt(0).toUpperCase() + w.slice(1);
   }
 }
+
+let idList = []
+var uniqueID = () => {
+  var id = "";
+  var chartable = "abcdefghijklmnopqrstuvwxyz0123456789";
+  var idLength = 5
+  do {
+    for (var i = 0; i < idLength; i++)
+    id += chartable.charAt(Math.floor(Math.random() * chartable.length));
+  } while (idList.includes(id))
+  idList.push(id)
+  return id;
+} 
 
 module.exports = command
