@@ -130,14 +130,23 @@ var renderInlineCommand = (commandLine) => {
     jsfile: '',
     cssfile: ''
   }
+  
+  var commandType, commandRest
+  if (commandLine.includes(' ')) {
+    commandType = commandLine.substr(0, commandLine.indexOf(' '))
+    commandRest = commandLine.substr(commandLine.indexOf(' ') + 1).trim();
+  } else {
+    commandType = commandLine
+    commandRest = ''
+  }
   var commandArray = commandLine.match(/\S+/g) || []
-  var commandType = commandArray[0]
   commandArray.splice(0, 1)
+
   const supportedInlineCommand = Object.keys(command.inline)
   if (supportedInlineCommand.includes(commandType)) {
     const argc = command.inline[commandType].argc
     if (argc === 'any' || argc.includes(commandArray.length)) {
-      command.inline[commandType].exec(renderResult, commandArray)
+      command.inline[commandType].exec(renderResult, commandArray, commandRest)
     } else {
       var err = new ErrorInfo('command', commandType + ' accepts ' + argc.join(', ') + ' argument(s).')
       renderResult.html = err.toHTML()

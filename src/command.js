@@ -218,70 +218,70 @@ var command = {
       argc: 'any',
       desp: 'Insert h1 title.',
       usage: '!h1 title-string',
-      exec: (res, args) => {
+      exec: (res, args, rest) => {
         var string = args.join(' ')
         var type = 'h1'
-        res.html = "<" + type + ">" + string + "</" + type + ">"
+        res.html = "<" + type + ">" + rest.replace(/\s/g, '&nbsp;') + "</" + type + ">"
       }
     },
     h2: {
       argc: 'any',
       desp: 'Insert h2 title.',
       usage: '!h2 title-string',
-      exec: (res, args) => {
+      exec: (res, args, rest) => {
         var string = args.join(' ')
         var type = 'h2'
-        res.html = "<" + type + ">" + string + "</" + type + ">"
+        res.html = "<" + type + ">" + rest.replace(/\s/g, '&nbsp;') + "</" + type + ">"
       }
     },
     h3: {
       argc: 'any',
       desp: 'Insert h3 title.',
       usage: '!h3 title-string',
-      exec: (res, args) => {
+      exec: (res, args, rest) => {
         var string = args.join(' ')
         var type = 'h3'
-        res.html = "<" + type + ">" + string + "</" + type + ">"
+        res.html = "<" + type + ">" + rest.replace(/\s/g, '&nbsp;') + "</" + type + ">"
       }
     },
     h4: {
       argc: 'any',
       desp: 'Insert h4 title.',
       usage: '!h4 title-string',
-      exec: (res, args) => {
+      exec: (res, args, rest) => {
         var string = args.join(' ')
         var type = 'h4'
-        res.html = "<" + type + ">" + string + "</" + type + ">"
+        res.html = "<" + type + ">" + rest.replace(/\s/g, '&nbsp;') + "</" + type + ">"
       }
     },
     h5: {
       argc: 'any',
       desp: 'Insert h5 title.',
       usage: '!h5 title-string',
-      exec: (res, args) => {
+      exec: (res, args, rest) => {
         var string = args.join(' ')
         var type = 'h5'
-        res.html = "<" + type + ">" + string + "</" + type + ">"
+        res.html = "<" + type + ">" + rest.replace(/\s/g, '&nbsp;') + "</" + type + ">"
       }
     },
     h6: {
       argc: 'any',
       desp: 'Insert h6 title.',
       usage: '!h6 title-string',
-      exec: (res, args) => {
+      exec: (res, args, rest) => {
         var string = args.join(' ')
         var type = 'h6'
-        res.html = "<" + type + ">" + string + "</" + type + ">"
+        res.html = "<" + type + ">" + rest.replace(/\s/g, '&nbsp;') + "</" + type + ">"
       }
     },
     checkbox: {
       argc: 'any',
       desp: 'Insert check box.',
       usage: '!checkbox string',
-      exec: (res, args) => {
+      exec: (res, args, rest) => {
         var string = args.join(' ')
         var id = uniqueID()
-        res.html = '<input type="checkbox" id="' + id + '">' + '<label style="cursor: pointer;" for="' + id + '">' + string + '</label>'
+        res.html = '<input type="checkbox" id="' + id + '">' + '<label style="cursor: pointer;" for="' + id + '">' + rest.replace(/\s/g, '&nbsp;') + '</label>'
       }
     },
 
