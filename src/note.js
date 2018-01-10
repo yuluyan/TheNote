@@ -213,6 +213,7 @@ var loadContent = (path) => {
   fs.readFile(path, 'utf8', (err, text) => {
     textbox.value = text
     updateContentFromTextbox()
+    confirmContent()
   })
 }
 
