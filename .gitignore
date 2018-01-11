@@ -1,2 +1,7 @@
 /*.bat
 node_modules/
+saves/catalog.json
+saves/notes/0.note
+saves/notes/1.note
+saves/notes/2.note
+saves/notes/3.note
