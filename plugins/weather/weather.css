@@ -1,0 +1,42 @@
+#weatherwrap {
+  width: 95%;
+}
+#weatherwrap:after {
+  clear:both;
+}
+#tempblock {
+  float: left;
+  width: 50%;
+  text-align: center;
+  margin-right: 0%;
+}
+#cityname {
+  font-size: 150%;
+}
+#tempnum {
+  font-size: 350%;
+}
+#unit {
+  font-size: 100%;
+  vertical-align: 115%
+}
+#mintemp, #maxtemp {
+  font-size: 120%;
+}
+#rangeunit {
+  font-size: 60%;
+  vertical-align: 40%;
+}
+#weatherblock {
+  text-align: center;
+}
+#weatherimg {
+  width: 25%;
+}
+#weathertype {
+  font-size: 150%;
+}
+#weatherdesp {
+  font-size: 90%;
+  text-align: center;
+}
