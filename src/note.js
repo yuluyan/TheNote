@@ -296,20 +296,24 @@ document.getElementById('notecontainer').addEventListener('dblclick', (e) => {
   var containerRect = document.getElementById('notecontainer').getBoundingClientRect()
   var clickPageY = document.body.scrollTop + e.clientY - (document.getElementById('titlebar').getBoundingClientRect().bottom - document.getElementById('titlebar').getBoundingClientRect().top) 
   var noteItemList = document.getElementById('notecontainer').getElementsByTagName("*")
-  var targetItem = noteItemList[0]
-  var closestDist = Math.abs((targetItem.getBoundingClientRect().top + 3 * targetItem.getBoundingClientRect().top) / 4 - containerRect.top - clickPageY)
-  for(var i = 0; i < noteItemList.length; i++) {
-    if (noteItemList[i].hasAttribute && noteItemList[i].hasAttribute('data-linenumber')) {
-      var noteItemRect = noteItemList[i].getBoundingClientRect()
-      var offset = Math.abs((noteItemRect.top + 3 * noteItemRect.bottom) / 4 - containerRect.top - clickPageY)
-      if (offset < closestDist) {
-        closestDist = offset
-        targetItem = noteItemList[i]
+  if (noteItemList.length > 0) {
+    var targetItem = noteItemList[0]
+    var closestDist = Math.abs((targetItem.getBoundingClientRect().top + 3 * targetItem.getBoundingClientRect().top) / 4 - containerRect.top - clickPageY)
+    for(var i = 0; i < noteItemList.length; i++) {
+      if (noteItemList[i].hasAttribute && noteItemList[i].hasAttribute('data-linenumber')) {
+        var noteItemRect = noteItemList[i].getBoundingClientRect()
+        var offset = Math.abs((noteItemRect.top + 3 * noteItemRect.bottom) / 4 - containerRect.top - clickPageY)
+        if (offset < closestDist) {
+          closestDist = offset
+          targetItem = noteItemList[i]
+        }
+        //console.log([offset, noteItemList[i].getAttribute('data-linenumber')])
       }
-      //console.log([offset, noteItemList[i].getAttribute('data-linenumber')])
     }
+    editContent(parseInt(targetItem.getAttribute('data-linenumber')))
+  } else {
+    editContent(1)
   }
-  editContent(parseInt(targetItem.getAttribute('data-linenumber')))
 })
 
 /*
