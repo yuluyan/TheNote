@@ -1,9 +1,7 @@
-const assert = require('assert')
-
 var magnetic = {
-  trajectoryLength: 30, // should > 1
+  trajectoryLength: 3, // Only use last 2 states.
   attractionDistance: 10,
-  releaseDistance: 25,
+  releaseDistance: 15,
   calc: (psArray, traj, size) => {
     var psBoundary = [[0],[0]]
     
@@ -50,9 +48,6 @@ var magnetic = {
 
     return resPos
   },
-  get getTrajectoryLength () {
-    return this.trajectoryLength
-  },
   get getAttractionDistance () {
     return this.attractionDistance
   },
@@ -65,25 +60,10 @@ function _vectorMinus(now_pos, pre_pos) {
   return [now_pos[0] - pre_pos[0], now_pos[1] - pre_pos[1]]
 }
 
-function cmp(obj1, obj2) {
-  return obj1[0] == obj2[0] && obj1[1] == obj2[1]
-}
-
-// The same as unique() in C++.
-function unique(array) { 
-  var tmp = 0
-  for(var i = 1; i < array.length; i++) {
-    if(!cmp(array[i], array[tmp])) array[++tmp] = array[i]
-  }
-  return array.slice(0, tmp + 1)
-}
-
 function _min2(obj1, obj2) {
   return obj1 > obj2 ? obj2 : obj1
 }
 
-// Get the first element equal or larger than val in array.
-// if there's no such element, return the last element.
 function nearest(array, val) {
   var inx = 0
   var miDist = -1
