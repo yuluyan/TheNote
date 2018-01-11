@@ -3,7 +3,7 @@ const assert = require('assert')
 var magnetic = {
   trajectoryLength: 30, // should > 1
   attractionDistance: 10,
-  releaseDistance: 25,
+  releaseDistance: 10,
   calc: (psArray, traj, size) => {
     var psBoundary = [[0],[0]]
     
