@@ -14,7 +14,7 @@ const isSecondInstance = app.makeSingleInstance((commandLine, workingDirectory) 
     message: 'Application is already running!',
    })
 })
-if (isSecondInstance) app.quit()
+if (isSecondInstance) app.exit()
 
 // Require nodejs utility here
 const path = require('path')
