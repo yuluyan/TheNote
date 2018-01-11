@@ -277,8 +277,8 @@ var showAboutMessage = () => {
   hideAllNotes()
   dialog.showMessageBox({
     type: 'info',
-    title: 'About Smart Note',
-    message: 'Created by Luyan Yu with Electron. Copyright reserved @ 2018.',
+    title: 'About TheNote',
+    message: 'Created by Luyan Yu and Yunzhi Jiang with Electron. Copyright reserved @ 2018.',
   }, () => { showAllNotes() })
 }
 
