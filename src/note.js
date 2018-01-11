@@ -328,7 +328,8 @@ var updateMousePos = (e) => {
   mouseWindowPos[1] = e.pageY
 }
 
-let isDrag = false;
+let isDrag = false
+let isOut = false
 var moveStart = (e) => {
   isDrag = true
   updateMousePos(e)
@@ -340,7 +341,7 @@ var moveStop = (e) => {
 var moveCalc = (e) => {
   e.stopPropagation();
   e.preventDefault();
-  if (isDrag) {
+  if (isDrag && !isOut) {
     var newWinPos = []
     newWinPos[0] = e.screenX - mouseWindowPos[0];
     newWinPos[1] = e.screenY - mouseWindowPos[1];
@@ -359,10 +360,37 @@ var moveCalc = (e) => {
   }
 }
 
+var moveOut = (e) => {
+  isOut = true
+  if (isDrag) {
+    var newWinPos = []
+    updateMousePos(e)
+    newWinPos[0] = e.screenX - mouseWindowPos[0];
+    newWinPos[1] = e.screenY - mouseWindowPos[1];
+    var size = remote.getCurrentWindow().getSize()
+    try {
+      remote.getCurrentWindow().setPosition(newWinPos[0], newWinPos[1]);
+      remote.getCurrentWindow().setSize(size[0], size[1]);
+    } catch (err) {
+      console.log(err);
+    }
+    //updateMousePos(e)
+  }
+}
+
+var moveIn = (e) => {
+  isOut = false
+  if (isDrag) {
+    isDrag = false
+  }
+}
+
 
 document.getElementById('titlebar').addEventListener('mousedown', moveStart)
 document.getElementById('titlebar').addEventListener('mousemove', moveCalc)
 document.getElementById('titlebar').addEventListener('mouseup', moveStop)
+//document.getElementById('titlebar').addEventListener('mouseout', moveOut)
+//document.getElementById('titlebar').addEventListener('mouseover', moveIn)
 
 
 ipcRenderer.on('loadTitle', (e, msg) => {
