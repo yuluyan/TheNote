@@ -12,8 +12,5 @@ TODO:
 !checkbox 美化checkbox
 !checkbox 添加plugin require path
 !checkbox edit模式选中居中
+!checkbox craiglist 爬虫
 
-plugin
-#ul
-craiglist 爬虫
-#
