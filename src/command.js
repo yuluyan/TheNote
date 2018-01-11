@@ -168,9 +168,10 @@ var command = {
           css: pluginPath + '.css'
         } 
         var isLoaded = false
+        res.html = '<div data-linenumber=' + linenumber + '>'
         if (fs.existsSync(config.path.root + config.path.category.app + pluginFilePath.html)) {
           var htmlfileContent = fs.readFileSync(config.path.root + config.path.category.app + pluginFilePath.html)
-          res.html = htmlfileContent
+          res.html += htmlfileContent
           isLoaded = true
         }
         if (fs.existsSync(config.path.root + config.path.category.app + pluginFilePath.js)) {
@@ -183,8 +184,9 @@ var command = {
         }
         if (!isLoaded) {
           var err = new ErrorInfo('plugin', pluginName + ' not found.')
-          res.html = err.toHTML(linenumber)
+          res.html += err.toHTML(linenumber)
         }
+        res.html += '</div>'
       }
     },
     notecolor: {

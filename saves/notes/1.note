@@ -10,6 +10,9 @@ TODO:
 !checkbox 修改textrender支持行内格式
 !checkbox 新建判断当前位置有无note
 !checkbox 美化checkbox
+!checkbox 添加plugin require path
+!checkbox edit模式选中居中
+
 plugin
 #ul
 craiglist 爬虫

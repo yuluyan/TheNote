@@ -74,7 +74,6 @@ var editContent = (lineNumber) => {
   textbox.scrollTop = textbox.scrollHeight;
   textbox.value += tempSave
   textbox.setSelectionRange(charNumberStart, charNumberEnd)
-  
 }
 
 // Confirm content change
@@ -94,13 +93,14 @@ var confirmContent = () => {
       value: textbox.value
     })
   }
-
+  /*
   var noteItemList = notecontainer.children
   for(var i = 0; i < noteItemList.length; i++) {
     noteItemList[i].addEventListener('dblclick', (e) => {
       editContent(parseInt(e.target.getAttribute('data-linenumber')))
     })
   }
+  */
 }
 
 // When focus
@@ -290,16 +290,36 @@ document.getElementById('closecross').addEventListener('click', closeNote)
 document.getElementById('title').addEventListener('click', confirmContent)
 document.getElementById('title').addEventListener('dblclick', editTitle)
 document.getElementById('notecontainer').addEventListener('click', confirmTitle)
-document.getElementById('notecontainer').addEventListener('click', (e) => {
-  if (e.detail === 3) editContent(1)}
-)
+document.getElementById('notecontainer').addEventListener('dblclick', (e) => {
+  //if (e.detail === 3) editContent(1)
+
+  var containerRect = document.getElementById('notecontainer').getBoundingClientRect()
+  var clickPageY = document.body.scrollTop + e.clientY - (document.getElementById('titlebar').getBoundingClientRect().bottom - document.getElementById('titlebar').getBoundingClientRect().top) 
+  var noteItemList = document.getElementById('notecontainer').getElementsByTagName("*")
+  var targetItem = noteItemList[0]
+  var closestDist = Math.abs((targetItem.getBoundingClientRect().top + 3 * targetItem.getBoundingClientRect().top) / 4 - containerRect.top - clickPageY)
+  for(var i = 0; i < noteItemList.length; i++) {
+    if (noteItemList[i].hasAttribute && noteItemList[i].hasAttribute('data-linenumber')) {
+      var noteItemRect = noteItemList[i].getBoundingClientRect()
+      var offset = Math.abs((noteItemRect.top + 3 * noteItemRect.bottom) / 4 - containerRect.top - clickPageY)
+      if (offset < closestDist) {
+        closestDist = offset
+        targetItem = noteItemList[i]
+      }
+      //console.log([offset, noteItemList[i].getAttribute('data-linenumber')])
+    }
+  }
+  editContent(parseInt(targetItem.getAttribute('data-linenumber')))
+})
+
+/*
 var noteItemList = document.getElementById('notecontainer').children
 for(var i = 0; i < noteItemList.length; i++) {
   noteItemList[i].addEventListener('dblclick', (e) => {
     editContent(parseInt(e.target.getAttribute('data-linenumber')))
   })
 }
-
+*/
 
 
 let mouseWindowPos = [];
