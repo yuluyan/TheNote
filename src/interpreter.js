@@ -160,6 +160,7 @@ var renderText = (textLine, commandLineNumber) => {
   if (isEscapedText(textLine)) {
     textLine = textLine.slice(1)
   }
+  textLine = textLine.replace(/\s/g, '&nbsp;')
   return {
     html: '<p data-linenumber=' + commandLineNumber + '>' + textLine + '</p>',
     js: ''
