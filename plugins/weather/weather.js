@@ -21,8 +21,6 @@ var initializeWeather = () => {
   clearTimeout(weatherTimeout)
 }
 
-
-
 var weatherRountine = (url) => {
   var today = new Date()
   var week = today.getDay()
