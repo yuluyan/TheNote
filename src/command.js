@@ -283,7 +283,10 @@ var command = {
       exec: (res, args, rest, linenumber) => {
         var string = args.join(' ')
         var id = uniqueID()
-        res.html = '<input type="checkbox" id="' + id + '" data-linenumber=' + linenumber + '>' + '<label data-linenumber=' + linenumber + ' style="cursor: pointer;" for="' + id + '">' + rest.replace(/\s/g, '&nbsp;') + '</label>'
+        res.html = '<div>'
+        res.html += '<input type="checkbox" id="' + id + '" data-linenumber=' + linenumber + '>' 
+        res.html += '<label data-linenumber=' + linenumber + ' style="cursor: pointer;" for="' + id + '">' + rest.replace(/\s/g, '&nbsp;') + '</label>'
+        res.html += '</div>'
       }
     },
 

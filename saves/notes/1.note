@@ -1,4 +1,4 @@
-!notecolor 7
+!notecolor 14
 BUG:
 #ul
 吸住后应容忍更大的鼠标偏移
@@ -9,6 +9,7 @@ BUG:
 TODO:
 !checkbox 修改textrender支持行内格式
 !checkbox 新建判断当前位置有无note
+!checkbox 美化checkbox
 plugin
 #ul
 天气
