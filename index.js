@@ -33,7 +33,7 @@ if (!fs.existsSync(config.path.root + config.path.category.app + config.path.fil
     titleText: 'TheNote Tutorial', 
     contentFile: '0.note', 
     width: 700, height: 1000, 
-    posX: 500, posY: 500,
+    posX: 0.8, posY: 0.2,
     ontop: true,
   }]
   fs.writeFileSync(config.path.root + config.path.category.app + config.path.file.catalog, JSON.stringify(catalog), 'utf8')
@@ -81,11 +81,12 @@ let wins = []
 let lastPosArrayArray = []
 
 var loadNote = (noteConfig) => {
+  var mainScreen = electron.screen.getPrimaryDisplay().size
   var win = new BrowserWindow({
     width: dev__ ? 1000 : noteConfig.width,
     height: dev__ ? 500 : noteConfig.height, 
-    x: noteConfig.posX,
-    y: noteConfig.posY,
+    x: parseInt(noteConfig.posX * mainScreen.width),
+    y: parseInt(noteConfig.posY * mainScreen.height),
     certer: false,
     show: false,
     frame: false,
@@ -128,8 +129,9 @@ var loadNote = (noteConfig) => {
   })
   win.on('move', (moveEvent) => { 
     if (!dev__) {
-      modifyCatalogEntryById(noteConfig.id, 'posX', win.getPosition()[0])
-      modifyCatalogEntryById(noteConfig.id, 'posY', win.getPosition()[1])
+      var mainScreen = electron.screen.getPrimaryDisplay().size
+      modifyCatalogEntryById(noteConfig.id, 'posX', win.getPosition()[0]/mainScreen.width)
+      modifyCatalogEntryById(noteConfig.id, 'posY', win.getPosition()[1]/mainScreen.height)
     }
   })
   win.on('focus', () => { win.webContents.executeJavaScript('onfocus()') })
@@ -235,7 +237,7 @@ var createNewNote = () => {
     titleText: 'New Note', 
     contentFile: newId + '.note', 
     width: 300, height: 300, 
-    posX: parseInt(mainScreen.width * 0.8), posY: parseInt(mainScreen.height * 0.2),
+    posX: 0.8, posY: 0.2,
     ontop: false,
   }
   fs.writeFileSync(config.path.root + config.path.category.app + config.path.category.notes + newId + '.note', '', 'utf8')
