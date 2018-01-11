@@ -15,9 +15,9 @@
   float: left;
 }
 .clocklabel {
-
 }
 .clock {
+  text-align: center;
   font-size: 35px;
   font-family: 'digital-clock-font';
 }
