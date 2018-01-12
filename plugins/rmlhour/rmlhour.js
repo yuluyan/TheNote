@@ -19,7 +19,8 @@ var rmlhourRountine = (url) => {
   var display = document.getElementById('rmlhourwrap')
   superagent.get(url).end(function(err,pres){
     if (err) {
-      display.innerHTML = "rml hour failed."
+      //display.innerHTML = "rml hour failed."
+      console.error('rml hour failed.')
     } else {
       var $ = cheerio.load(pres.text)
       var resultStr = $('.libcalTable td:contains(Physics Mathematics Astronomy Library)')

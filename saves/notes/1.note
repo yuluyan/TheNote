@@ -3,7 +3,7 @@ BUG:
 #ul
 标题不能带有 " '
 非focus情况禁用最小化按钮
-修改标题不能拖动
+修改标题不能拖动（加个flag）
 #
 TODO:
 !checkbox 修改textrender支持行内格式

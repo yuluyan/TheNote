@@ -21,7 +21,8 @@ var gymhourRountine = (url) => {
   var display = document.getElementById('gymhourwrap')
   superagent.get(url).end(function(err,pres){
     if (err) {
-      display.innerHTML = "Gym hour failed."
+      //display.innerHTML = "Gym hour failed."
+      console.error('gym hour failed.')
     } else {
       var $ = cheerio.load(pres.text)
       var resultStr
