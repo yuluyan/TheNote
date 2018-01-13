@@ -41,7 +41,7 @@
             endDiv.innerHTML = hourArr[1]
             explainDiv.innerHTML = (h >= hourArr[0] && h < hourArr[1]) ? 'open' : 'closed'
           } else {
-            console.log(hourArr)
+            //console.log(hourArr)
             //display.innerHTML = 'Failed'
           }
         }
