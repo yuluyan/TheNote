@@ -18,7 +18,7 @@
       panel.className = 'clockpanel'
       var label = document.createElement('div')
       label.className = 'clocklabel'
-      label.innerHTML = clock.label
+      label.innerHTML = clock.label + ' <span></span>'
       var clocknum = document.createElement('div')
       clocknum.className = 'clock'
       clocknum.dataset.timezone = clock.timezone - localzone
@@ -51,11 +51,11 @@
       }
       if (hh >= 24) {
         ret.h = hh - 24
-        ret.dayoffset = 1
+        ret.dayoffset = '+1'
       }
       if (hh < 0) {
         ret.h = hh + 24
-        ret.dayoffset = -1
+        ret.dayoffset = '-1'
       }
       return ret
     },
@@ -64,6 +64,11 @@
       for (i = 0; i < clocks.length; i++) {
         var timezone = parseInt(clocks[i].getAttribute('data-timezone'))
         clocks[i].innerHTML = clock.padZero(clock.convertTimezone(h, timezone).h) + ":" + clock.padZero(m) + ":" + clock.padZero(s)
+        if (clock.convertTimezone(h, timezone).dayoffset !== 0) {
+          clocks[i].previousSibling.children[0].innerHTML = '(' + clock.convertTimezone(h, timezone).dayoffset + ')'
+        } else {
+          //clocks[i].previousSibling.children[0].innerHTML = ''
+        }
       }
     },
     startClock: () => {
