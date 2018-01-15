@@ -1,4 +1,4 @@
-!notecolor 14
+!notecolor 8
 BUG:
 #ul
 标题不能带有 " '
@@ -13,4 +13,5 @@ TODO:
 !checkbox edit模式选中居中
 !checkbox craiglist 爬虫
 !checkbox 递归解释
+!checkbox 课程表
 

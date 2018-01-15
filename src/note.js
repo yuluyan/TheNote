@@ -93,14 +93,7 @@ var confirmContent = () => {
       value: textbox.value
     })
   }
-  /*
-  var noteItemList = notecontainer.children
-  for(var i = 0; i < noteItemList.length; i++) {
-    noteItemList[i].addEventListener('dblclick', (e) => {
-      editContent(parseInt(e.target.getAttribute('data-linenumber')))
-    })
-  }
-  */
+  
 }
 
 // When focus

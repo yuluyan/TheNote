@@ -283,12 +283,47 @@ var command = {
       desp: 'Insert check box.',
       usage: '!checkbox string',
       exec: (res, args, rest, linenumber) => {
-        var string = args.join(' ')
         var id = uniqueID()
         res.html = '<div>'
         res.html += '<input type="checkbox" id="' + id + '" data-linenumber=' + linenumber + '>' 
         res.html += '<label data-linenumber=' + linenumber + ' style="cursor: pointer;" for="' + id + '">' + rest.replace(/\s/g, '&nbsp;') + '</label>'
         res.html += '</div>'
+      }
+    },
+    date: {
+      argc: 'any',
+      desp: 'Create a date entry',
+      usage: '!date -date- string',
+      exec: (res, args, rest, linenumber) => {
+        var id = uniqueID()
+        var dateString = /-([^/]+)-/.exec(rest)[1]
+        var entryString = rest.slice(rest.lastIndexOf('-') + 1).trim()
+        var weekdayName = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+        var date = new Date(dateString)
+        var now = new Date(Date.now())
+        var isYearSpecified = false
+        for (var i = -20; i <= 100; i++) {
+          if(dateString.includes(String(now.getFullYear() + i))) {
+            isYearSpecified = true
+            break
+          }
+        }
+        if (!isYearSpecified) date.setFullYear(now.getFullYear())
+        res.html = '<div data-datevalue=' + date.valueOf() + ' class="dateentry" id="' + id + '">'
+        res.html += '<span data-linenumber=' + linenumber + ' class="dateentrydate">' + date.getFullYear() + '/' + (date.getMonth() + 1)  + '/' + date.getDate() + ', ' + weekdayName[date.getDay()] + '</span>'
+        res.html += '<span data-linenumber=' + linenumber + ' class="dateentryleft">' + Math.floor((date - now) / (1000 * 60 * 60 * 24)) + ' days</span>'
+        res.html += '<div data-linenumber=' + linenumber + ' class="dateentryitem">&nbsp;&nbsp;&nbsp;&nbsp;' + entryString + '</div>'
+        res.html += '</div>'
+        res.js = '(function () {\n'
+        res.js += 'var updateDate = { timer: null,\n'
+        res.js += 'update: () => {\n'
+        res.js += 'var entry = document.getElementById("' + id + '")\n'
+        res.js += 'console.log("xxx")\n'
+        res.js += 'entry.firstChild.nextSibling.innerHTML = Math.floor((parseInt(entry.getAttribute("data-datevalue")) - Date.now()) / (1000 * 60 * 60 * 24)) + " days"\n'
+        res.js += 'updateDate.timer = setTimeout(updateDate.update, 60000)\n'
+        res.js += '}, init: () => { clearTimeout(updateDate.timer); updateDate.update() }}\n'
+        res.js += 'updateDate.init() })();\n'
+        
       }
     },
 
