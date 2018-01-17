@@ -71,6 +71,9 @@
         if (endStr.charAt(endStr.length - 1) === 'p') {
           end += 12
         }
+        if (endStr.charAt(endStr.length - 1) === 'a' && end === 1) {
+          end += 24
+        }
         return [start, end]
       } else {
         return undefined
