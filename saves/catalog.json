@@ -1,1 +1,52 @@
-[{"id":0,"titleText":"Tutorial","contentFile":"0.note","width":422,"height":588,"posX":0.1296875,"posY":0.06666666666666667,"ontop":false},{"id":1,"titleText":"Dev Log","contentFile":"1.note","width":300,"height":570,"posX":0.56015625,"posY":0.06666666666666667,"ontop":false},{"id":2,"titleText":"Life","contentFile":"2.note","width":302,"height":380,"posX":0.803125,"posY":0.06666666666666667,"ontop":false},{"id":3,"titleText":"Hours","contentFile":"3.note","width":302,"height":176,"posX":0.803125,"posY":0.3402777777777778,"ontop":false},{"id":4,"titleText":"Note","contentFile":"4.note","width":300,"height":288,"posX":0.68203125,"posY":0.2625,"ontop":false},{"id":5,"titleText":"Reminder","contentFile":"5.note","width":300,"height":272,"posX":0.68203125,"posY":0.06666666666666667,"ontop":false}]
+[
+  {
+    "id": 0,
+    "titleText": "Tutorial",
+    "contentFile": "0.note",
+    "width": 422,
+    "height": 588,
+    "posX": 0.1296875,
+    "posY": 0.06666666666666667,
+    "ontop": false
+  },
+  {
+    "id": 1,
+    "titleText": "Dev Log",
+    "contentFile": "1.note",
+    "width": 300,
+    "height": 570,
+    "posX": 0.56015625,
+    "posY": 0.06666666666666667,
+    "ontop": false
+  },
+  {
+    "id": 2,
+    "titleText": "Life",
+    "contentFile": "2.note",
+    "width": 300,
+    "height": 521,
+    "posX": 0.803125,
+    "posY": 0.06666666666666667,
+    "ontop": false
+  },
+  {
+    "id": 3,
+    "titleText": "Note",
+    "contentFile": "3.note",
+    "width": 300,
+    "height": 240,
+    "posX": 0.68203125,
+    "posY": 0.2611111111111111,
+    "ontop": false
+  },
+  {
+    "id": 4,
+    "titleText": "Reminder",
+    "contentFile": "4.note",
+    "width": 300,
+    "height": 272,
+    "posX": 0.68203125,
+    "posY": 0.06666666666666667,
+    "ontop": false
+  }
+]

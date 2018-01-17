@@ -2,3 +2,8 @@
 !plugin clock
 
 !plugin weather
+
+!sep 2
+
+!plugin gymhour
+!plugin rmlhour
