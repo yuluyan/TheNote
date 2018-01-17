@@ -11,10 +11,12 @@ colorScheme = [
   'mediumpurple',
   'orangered',
   'paleturquoise',
+  'plainwhite',
   'rosybrown',
   'salmon',
   'thistle',
   'wheat',
+  'zerodark',
 ]
 
 module.exports = colorScheme
