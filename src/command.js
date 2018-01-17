@@ -3,6 +3,7 @@ const path = require('path')
 
 const config = require('./config.js')
 const colorScheme = require(config.path.upperRoot + config.path.file.colorScheme)
+const dateParser = require('./dateparser.js')
 
 var command = {
   block: {
@@ -295,25 +296,150 @@ var command = {
       desp: 'Create a date entry',
       usage: '!date -date- string',
       exec: (res, args, rest, linenumber) => {
+        const dateSp = '/'
+        const timeSp = ':'
+        const spanSp = ' - '
+        const commaSp = ' '
+
         var id = uniqueID()
-        var dateString = /-([^/]+)-/.exec(rest)[1]
+        var dateString = /-(.+)-/.exec(rest)[1]
         var entryString = rest.slice(rest.lastIndexOf('-') + 1).trim()
-        var weekdayName = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-        var date = new Date(dateString)
-        var now = new Date(Date.now())
-        var isYearSpecified = false
-        for (var i = -20; i <= 100; i++) {
-          if(dateString.includes(String(now.getFullYear() + i))) {
-            isYearSpecified = true
-            break
+        var date = dateParser().exec(dateString)
+        res.html = ''
+        if (date.err.code === 0) {
+          if (!date.end.isSet) {
+            // only start date
+            res.html += '<div data-datevalue=' + date.start.value + ' class="dateentry" id="' + id + '">'
+            res.html += '<span data-linenumber=' + linenumber + ' class="dateentrydate">'
+            if (date.start.isDatePartSet) {
+              // has date part
+              if ((!date.start.isYearSet) && (!date.start.isDateSet)) {
+                // only month
+                res.html += date.start.year + dateSp + date.start.month
+              } else {
+                res.html += date.start.weekName + commaSp
+                if (date.start.isYearSet) {
+                  res.html += date.start.year + dateSp
+                }
+                res.html += date.start.month + dateSp + date.start.date
+                if (date.start.isTimePartSet) {
+                  // also has time part
+                  res.html += commaSp + date.start.hour + timeSp + dateParser().numberToTwoDigitString(date.start.minute)
+                  if (date.start.isSecondSet) {
+                    res.html += timeSp + dateParser().numberToTwoDigitString(date.start.second)
+                  }
+                }
+              }
+            } else {
+              if (date.start.isTimePartSet) {
+                // only time
+                res.html += date.start.hour + timeSp + dateParser().numberToTwoDigitString(date.start.minute)
+                if (date.start.isSecondSet) {
+                  res.html += timeSp + dateParser().numberToTwoDigitString(date.start.second)
+                }
+              } else {
+                // neither
+                console.error('Error')
+              }
+            }
+            res.html += '</span>'
+            res.html += '<span data-linenumber=' + linenumber + ' class="dateentryleft"></span>'
+            res.html += '<div data-linenumber=' + linenumber + ' class="dateentryitem">&nbsp;&nbsp;&nbsp;&nbsp;' + entryString + '</div>'
+            res.html += '</div>'
+          } else {
+            // both start and end
+            res.html += '<div data-datevalue=' + date.start.value + ' data-startdatevalue=' + date.end.value + ' class="dateentry" id="' + id + '">'
+            res.html += '<span data-linenumber=' + linenumber + ' class="dateentrydate">'
+
+            var startDisplay = '', endDisplay = '', sameTime = false
+            if (date.start.isDatePartSet) {
+              // start has date part
+              if ((!date.start.isYearSet) && (!date.start.isDateSet) && (!date.end.isYearSet) && (!date.end.isDateSet)) {
+                // only month
+                startDisplay += date.start.year + dateSp + date.start.month
+                endDisplay += date.end.month
+              } else {
+                startDisplay += date.start.weekName + commaSp
+                //endDisplay += date.end.weekName + commaSp
+                if (date.start.isYearSet || date.end.isYearSet) {
+                  // at least one year set, show explicitly
+                  startDisplay += date.start.year + dateSp + date.start.month + dateSp + date.start.date
+                  endDisplay += date.end.weekName + commaSp
+                  endDisplay += date.end.year + dateSp + date.end.month + dateSp + date.end.date
+                } else {
+                  startDisplay += date.start.month
+                  if (date.start.month !== date.end.month) {
+                    startDisplay += dateSp + date.start.date
+                    endDisplay += date.end.weekName + commaSp
+                    endDisplay += date.end.month + dateSp + date.start.date
+                  } else {
+                    startDisplay += dateSp + date.start.date
+                    if (date.start.date !== date.end.date) {
+                      endDisplay += date.end.date
+                    } else {
+                      if (date.start.isTimePartSet) {
+                        startDisplay += commaSp + date.start.hour + timeSp + dateParser().numberToTwoDigitString(date.start.minute)
+                        if (date.start.hour !== date.end.hour || date.start.minute !== date.end.minute) {
+                          endDisplay += date.end.hour + timeSp + dateParser().numberToTwoDigitString(date.end.minute)
+                        } else {
+                          if (date.start.isSecondSet) {
+                            startDisplay += timeSp + dateParser().numberToTwoDigitString(date.start.second)
+                            if (date.start.second !== date.end.second) {
+                              endDisplay += date.end.hour + timeSp + dateParser().numberToTwoDigitString(date.end.minute) + timeSp + dateParser().numberToTwoDigitString(date.end.second)
+                            } else {
+                              sameTime = true
+                            }
+                          } else {
+                            sameTime = true
+                          }
+                        }
+                      } else {
+                        sameTime = true
+                      }
+                    }
+                  }
+                }
+              }
+            } else {
+              if (date.start.isTimePartSet) {
+                // only time
+                startDisplay += date.start.hour + timeSp + dateParser().numberToTwoDigitString(date.start.minute)
+                if (date.start.hour !== date.end.hour || date.start.minute !== date.end.minute) {
+                  endDisplay += date.end.hour + timeSp + dateParser().numberToTwoDigitString(date.end.minute)
+                } else {
+                  if (date.start.isSecondSet) {
+                    startDisplay += timeSp + dateParser().numberToTwoDigitString(date.start.second)
+                    if (date.start.second !== date.end.second) {
+                      endDisplay += date.end.hour + timeSp + dateParser().numberToTwoDigitString(date.end.minute) + timeSp + dateParser().numberToTwoDigitString(date.end.second)
+                    } else {
+                      sameTime = true
+                    }
+                  } else {
+                    sameTime = true
+                  }
+                }
+              } else {
+                // neither
+                console.error('Error 2')
+              }
+            }
+            if (!sameTime) {
+              res.html += startDisplay + spanSp + endDisplay
+            } else {
+              res.html += startDisplay
+            }
+            res.html += '</span>'
+            res.html += '<span data-linenumber=' + linenumber + ' class="dateentryleft"></span>'
+            res.html += '<div data-linenumber=' + linenumber + ' class="dateentryitem">&nbsp;&nbsp;&nbsp;&nbsp;' + entryString + '</div>'
+            res.html += '</div>'
           }
+          
+        } else {
+          var err = new ErrorInfo('date', 'Code ' + date.err.code + ': ' + date.err.msg)
+          res.html = err.toHTML(linenumber)
         }
-        if (!isYearSpecified) date.setFullYear(now.getFullYear())
-        res.html = '<div data-datevalue=' + date.valueOf() + ' class="dateentry" id="' + id + '">'
-        res.html += '<span data-linenumber=' + linenumber + ' class="dateentrydate">' + date.getFullYear() + '/' + (date.getMonth() + 1)  + '/' + date.getDate() + ', ' + weekdayName[date.getDay()] + '</span>'
-        res.html += '<span data-linenumber=' + linenumber + ' class="dateentryleft">' + Math.floor((date - now) / (1000 * 60 * 60 * 24)) + ' days</span>'
-        res.html += '<div data-linenumber=' + linenumber + ' class="dateentryitem">&nbsp;&nbsp;&nbsp;&nbsp;' + entryString + '</div>'
-        res.html += '</div>'
+        
+        /*
         res.js = '(function () {\n'
         res.js += 'var updateDate = { timer: null,\n'
         res.js += 'update: () => {\n'
@@ -323,7 +449,7 @@ var command = {
         res.js += 'updateDate.timer = setTimeout(updateDate.update, 60000)\n'
         res.js += '}, init: () => { clearTimeout(updateDate.timer); updateDate.update() }}\n'
         res.js += 'updateDate.init() })();\n'
-        
+        */
       }
     },
 

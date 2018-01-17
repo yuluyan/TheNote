@@ -93,7 +93,7 @@ var confirmContent = () => {
       value: textbox.value
     })
   }
-  
+
 }
 
 // When focus
@@ -181,6 +181,12 @@ var appendHeadCSSFile = (pathArray) => {
 }
 
 var updateContentFromTextbox = () => {
+  //clear all timer
+  var maxtimer = setTimeout(function(){}, 0)
+  for(var i = 0; i < maxtimer; i += 1) { 
+    clearTimeout(i)
+  }
+
   var textbox = document.getElementById('textbox')
   var notecontainer = document.getElementById('notecontainer')
   var interpretedResult = interpreter(textbox.value)
@@ -190,6 +196,14 @@ var updateContentFromTextbox = () => {
   appendHeadJS(interpretedResult.js)
   appendHeadJSFile(interpretedResult.jsfile)
   appendHeadCSSFile(interpretedResult.cssfile)
+
+  // Update date entry
+  var dateEntries = document.getElementsByClassName('dateentry')
+  for (var i = 0; i < dateEntries.length; i++) {
+    if (dateEntries[i].hasAttribute('data-datevalue')) {
+      dateEntryUpdater(dateEntries[i].id)
+    }
+  }
 }
 
 var setWindowId = (id) => {
@@ -400,3 +414,68 @@ ipcRenderer.on('loadContent', (e, msg) => {
 ipcRenderer.on('setWindowId', (e, msg) => {
   setWindowId(msg.id)
 })
+
+
+// Date entry
+var dateEntryUpdater = function (id) {
+  var updateDate = {
+    timer: null,
+    update: () => {
+      var entry = document.getElementById(id)
+      console.log("update left")
+      var isPast = entry.getAttribute("data-datevalue") < Date.now().valueOf()
+      var leftSecond = Math.abs(parseInt((entry.getAttribute("data-datevalue")- Date.now()) / 1000))
+      var leftCountPrimary, leftUnitPrimary
+      var leftCountSecondary, leftUnitSecondary
+      var hasSecondaryUnit = false
+      var updateInterval
+      if (leftSecond >= 86400 * 5) {
+        leftCountPrimary = Math.floor(leftSecond / (60 * 60 * 24))
+        leftUnitPrimary = "day"
+        updateInterval = 3600000
+      } else if (leftSecond >= 86400) {
+        hasSecondaryUnit = true
+        leftCountPrimary = Math.floor(leftSecond / (60 * 60 * 24))
+        leftUnitPrimary = "day"
+        leftCountSecondary = Math.floor((leftSecond - leftCountPrimary * 86400) / (60 * 60))
+        leftUnitSecondary = "hour"
+        updateInterval = 60000
+      } else if (leftSecond >= 3600 * 12) {
+        leftCountPrimary = Math.floor(leftSecond / (60 * 60))
+        leftUnitPrimary = "hour"
+        updateInterval = 60000
+      } else if (leftSecond >= 3600) {
+        hasSecondaryUnit = true
+        leftCountPrimary = Math.floor(leftSecond / (60 * 60))
+        leftUnitPrimary = "hour"
+        leftCountSecondary = Math.floor((leftSecond - leftCountPrimary * 3600) / (60))
+        leftUnitSecondary = "min"
+        updateInterval = 5000
+      } else if (leftSecond >= 60) {
+        hasSecondaryUnit = true
+        leftCountPrimary = Math.floor(leftSecond / (60))
+        leftUnitPrimary = "min"
+        leftCountSecondary = Math.floor((leftSecond - leftCountPrimary * 60) / (1))
+        leftUnitSecondary = "sec"
+        updateInterval = 200
+      } else {
+        // <60s
+        leftCountPrimary = Math.floor(leftSecond / (1))
+        leftUnitPrimary = "sec"
+        updateInterval = 200
+      }
+      entry.firstChild.nextSibling.innerHTML = (
+        (isPast ? "" : "in ") + 
+        leftCountPrimary + " " + updateDate.pluralize(leftUnitPrimary, leftCountPrimary) + 
+        (hasSecondaryUnit ? " " + leftCountSecondary + " " + updateDate.pluralize(leftUnitSecondary, leftCountSecondary) : "") + 
+        (isPast ? " ago" : "")
+      )
+      updateDate.timer = setTimeout(updateDate.update, updateInterval)
+    },
+    pluralize: (word, count) => {
+      return (count > 1 ? word + 's' : word)
+    },
+    init: () => { clearTimeout(updateDate.timer); updateDate.update() }
+  }
+  updateDate.init() 
+};
