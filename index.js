@@ -4,7 +4,7 @@ var debug = (arg) => {
 }
 
 const electron = require('electron')
-const {app, BrowserWindow, ipcMain, Menu, Tray, dialog} = electron
+const {app, BrowserWindow, ipcMain, Menu, Tray, dialog, shell} = electron
 
 // Make sure only one instance
 const isSecondInstance = app.makeSingleInstance((commandLine, workingDirectory) => {
@@ -489,4 +489,8 @@ ipcMain.on('moving', (e, msg) => {
 
 ipcMain.on('hideClicked', (e, msg) => {
   hideNote(msg.id)
+})
+
+ipcMain.on('openlink', (e, msg) => {
+  shell.openExternal(msg.link)
 })

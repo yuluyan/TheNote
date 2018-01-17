@@ -298,8 +298,6 @@ document.getElementById('title').addEventListener('click', confirmContent)
 document.getElementById('title').addEventListener('dblclick', editTitle)
 document.getElementById('notecontainer').addEventListener('click', confirmTitle)
 document.getElementById('notecontainer').addEventListener('dblclick', (e) => {
-  //if (e.detail === 3) editContent(1)
-
   var containerRect = document.getElementById('notecontainer').getBoundingClientRect()
   var clickPageY = document.body.scrollTop + e.clientY - (document.getElementById('titlebar').getBoundingClientRect().bottom - document.getElementById('titlebar').getBoundingClientRect().top) 
   var noteItemList = document.getElementById('notecontainer').getElementsByTagName("*")
@@ -396,7 +394,6 @@ var moveIn = (e) => {
   }
 }
 
-
 document.getElementById('titlebar').addEventListener('mousedown', moveStart)
 document.getElementById('titlebar').addEventListener('mousemove', moveCalc)
 document.getElementById('titlebar').addEventListener('mouseup', moveStop)
@@ -479,3 +476,9 @@ var dateEntryUpdater = function (id) {
   }
   updateDate.init() 
 };
+
+var openLink = (link) => {
+  ipcRenderer.send('openlink', {
+    link: link,
+  })
+}

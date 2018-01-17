@@ -460,7 +460,23 @@ var command = {
         res.html += '<p data-linenumber=' + linenumber + '>' + rest.replace(/./g, '*') + '</p>'
       }
     },
-
+    link: {
+      argc: 'any',
+      desp: 'Insert a link.',
+      usage: '!link href-string [display-string]',
+      exec: (res, args, rest, linenumber) => {
+        if (args.length > 0) {
+          var href = args[0]
+          var display = args[0]
+          if (args[1]) display = rest.replace(href, '').trim().replace(/\s/g, '&nbsp;')
+          res.html = '<div><div onclick="openLink(\'' + href + '\')" title="' + href + '" data-linenumber=' + linenumber + ' class="notelink">' + display + "</div></div>"
+        } else {
+          var err = new ErrorInfo('link', 'A link should be provided.')
+          res.html = err.toHTML(linenumber)
+        }
+      }
+    },
+    
     // get command usage
     help: {
       argc: [1],
