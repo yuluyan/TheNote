@@ -452,6 +452,14 @@ var command = {
         */
       }
     },
+    password: {
+      argc: 'any',
+      desp: 'Hide secret text.',
+      usage: '!password string',
+      exec: (res, args, rest, linenumber) => {
+        res.html += '<p data-linenumber=' + linenumber + '>' + rest.replace(/./g, '*') + '</p>'
+      }
+    },
 
     // get command usage
     help: {
