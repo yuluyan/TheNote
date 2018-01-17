@@ -303,7 +303,7 @@ var command = {
 
         var id = uniqueID()
         var dateString = /-(.+)-/.exec(rest)[1]
-        var entryString = rest.slice(rest.lastIndexOf('-') + 1).trim()
+        var entryString = rest.slice(rest.lastIndexOf('-') + 1).trim().replace(/\s/g, '&nbsp;').replace(/\\n/g, '<br>')
         var date = dateParser().exec(dateString)
         res.html = ''
         if (date.err.code === 0) {
@@ -344,7 +344,7 @@ var command = {
             }
             res.html += '</span>'
             res.html += '<span data-linenumber=' + linenumber + ' class="dateentryleft"></span>'
-            res.html += '<div data-linenumber=' + linenumber + ' class="dateentryitem">&nbsp;&nbsp;&nbsp;&nbsp;' + entryString + '</div>'
+            res.html += '<div data-linenumber=' + linenumber + ' class="dateentryitem">' + entryString + '</div>'
             res.html += '</div>'
           } else {
             // both start and end
@@ -430,7 +430,7 @@ var command = {
             }
             res.html += '</span>'
             res.html += '<span data-linenumber=' + linenumber + ' class="dateentryleft"></span>'
-            res.html += '<div data-linenumber=' + linenumber + ' class="dateentryitem">&nbsp;&nbsp;&nbsp;&nbsp;' + entryString + '</div>'
+            res.html += '<div data-linenumber=' + linenumber + ' class="dateentryitem">' + entryString + '</div>'
             res.html += '</div>'
           }
           
