@@ -92,6 +92,7 @@ var loadNote = (noteConfig) => {
     frame: false,
     maximizable: false,
     fullscreenable: false,
+    skipTaskbar: true,
     alwaysOnTop: noteConfig.ontop,
     minWidth: 300, minHeight: 150,
   })
