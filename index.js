@@ -149,7 +149,12 @@ var loadNote = (noteConfig) => {
         break
       }
     } 
-    if (isAllHidden) app.exit()
+    if (isAllHidden) { 
+      if (catalog) {
+        saveCatalog(catalog)
+      }
+      app.exit()
+    }
   })
 }
 
@@ -159,11 +164,17 @@ app.on('ready', () => {
 
   initializeTray(wins)
 })
-
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
   }
+})
+app.on('will-quit', (e) => {
+  e.preventDefault()
+  if (catalog) {
+    saveCatalog(catalog)
+  }
+  app.exit()
 })
 app.on('activate', () => {
   if (wins === null) {

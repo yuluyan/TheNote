@@ -9,7 +9,7 @@ var closeNote = (e) => {
   e.preventDefault()
   e.stopPropagation()
   var window = remote.getCurrentWindow()
-  if (closecross.style.display === 'block') {
+  if (document.getElementById('closecross').style.display === 'block') {
     console.log(window.isFocused())
     ipcRenderer.send('hideClicked', {
       id: getWindowId(),
@@ -107,6 +107,7 @@ var onfocus = () => {
 
   var notecontainer = document.getElementById('notecontainer')
   notecontainer.style.overflowY = 'auto'
+
 }
 
 // When blur
@@ -120,7 +121,6 @@ var onblur = () => {
 
   var notecontainer = document.getElementById('notecontainer')
   notecontainer.style.overflowY = 'hidden'
-
 
   confirmTitle()
   confirmContent()
@@ -292,8 +292,9 @@ var bodyCatchKey = (e) => {
 }
 
 document.getElementsByTagName('body')[0].addEventListener('keydown', bodyCatchKey)
-document.getElementById('textbox').addEventListener('keydown', editorCatchKey)
 document.getElementById('closecross').addEventListener('click', closeNote)
+//document.getElementById('closecross').addEventListener('mousedown', closeNoteBefore)
+document.getElementById('textbox').addEventListener('keydown', editorCatchKey)
 document.getElementById('title').addEventListener('click', confirmContent)
 document.getElementById('title').addEventListener('dblclick', editTitle)
 document.getElementById('notecontainer').addEventListener('click', confirmTitle)
