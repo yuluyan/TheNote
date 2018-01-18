@@ -1,17 +1,18 @@
-!notecolor 13
+!notecolor random
 BUG:
 #ul
 标题不能带有 " '
 非focus情况禁用最小化按钮
 修改标题不能拖动（加个flag）
+checkbox保存
 #
 TODO:
 !checkbox 修改textrender支持行内格式
 !checkbox 新建判断当前位置有无note
-!checkbox 美化checkbox
 !checkbox 添加plugin require path
 !checkbox edit模式选中居中
 !checkbox craiglist 爬虫
 !checkbox 递归解释
 !checkbox 课程表
+!checkbox 保存显示/隐藏状态
 

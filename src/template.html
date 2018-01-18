@@ -196,11 +196,47 @@
       margin-right: 3%;
       border-radius: 15px;
       display: inline-block;
-   }
-   .notelink:hover {
+    }
+    .notelink:hover {
       background-color: var(--well-color);
       text-decoration: none;
     }
+    .notecheckbox {
+      display: none;
+    }
+    .notecheckboxlabel {
+      height: var(--content-fontsize);
+      cursor: pointer;	
+      padding-left: 8px;
+      margin-top: 3px;
+      margin-bottom: 3px;
+    }
+    .notecheckboxlabel div {
+      vertical-align: -20%;
+      height: calc(var(--content-fontsize) - 5px);
+      width: calc(var(--content-fontsize) - 5px);
+      display: inline-block;
+      border: 1px solid var(--main-text-color);
+      text-align: center;
+      line-height: calc(var(--content-fontsize) + 0px);
+      margin-right: 8px;	
+      border-radius: 1px;
+    }
+    .notecheckboxlabel span {
+      font-size: 25px;
+      font-weight: bold;
+      opacity: 0;
+    }
+    .notecheckboxlabel:hover div {
+      background: var(--well-color);
+    }
+    .notecheckbox:checked + .notecheckboxlabel span {
+      opacity: 1; 
+    }
+    .notecheckbox:checked + .notecheckboxlabel div {
+      background: var(--well-color);
+    }
+
   </style>
   <head>
     <meta charset="UTF-8">
