@@ -35,6 +35,7 @@ if (!fs.existsSync(config.path.root + config.path.category.app + config.path.fil
     width: 700, height: 1000, 
     posX: 0.8, posY: 0.2,
     ontop: true,
+    showOnstart: true,
   }]
   fs.writeFileSync(config.path.root + config.path.category.app + config.path.file.catalog, JSON.stringify(catalog), 'utf8')
   var tutoralNote = fs.readFileSync(config.path.root + config.path.category.app + config.path.file.tutorial, 'utf8')
@@ -116,6 +117,9 @@ var loadNote = (noteConfig) => {
 
   win.once('ready-to-show', () => {
     win.show()
+    if (!noteConfig.showOnstart) {
+      win.hide()
+    }
     if (dev__) {
       win.webContents.openDevTools()
     }
@@ -142,7 +146,9 @@ var loadNote = (noteConfig) => {
   })
   win.on('close', (e) => { 
     e.preventDefault()
-    hideNote(noteConfig.id)
+    if (wins[noteConfig.id] && wins[noteConfig.id].isVisible()) {
+      wins[noteConfig.id].hide()
+    }
     var isAllHidden = true
     for (var i = 0; i < catalog.length; i++) {
       if (wins[catalog[i].id] && wins[catalog[i].id].isVisible()) {
@@ -185,10 +191,12 @@ app.on('activate', () => {
 })
 
 var focusNote = (id) => {
-  if (wins[id].isVisible()) 
+  if (wins[id].isVisible()) {
     wins[id].focus()
-  else 
+  } else {
     wins[id].show() 
+    modifyCatalogEntryById(id, 'showOnstart', true)
+  }
 }
 
 var showNote = (id) => {
@@ -202,6 +210,7 @@ var showNote = (id) => {
     } else {
       wins[id].showInactive()
     }
+    modifyCatalogEntryById(id, 'showOnstart', true)
     updateTray(wins)
   }
 }
@@ -213,6 +222,7 @@ var showAllNotes = () => {
 var hideNote = (id) => {
   if (wins[id] && wins[id].isVisible()) {
     wins[id].hide()
+    modifyCatalogEntryById(id, 'showOnstart', false)
     updateTray(wins)
   }
 }
@@ -226,11 +236,13 @@ var toggleNoteDisplay = (id) => {
     if (wins[id].isVisible()) {
       if (wins[id].isMinimized()) {
         wins[id].restore()
+        modifyCatalogEntryById(id, 'showOnstart', true)
       } else {
         hideNote(id)
       }
     } else {
       wins[id].showInactive()
+      modifyCatalogEntryById(id, 'showOnstart', true)
     }
     updateTray(wins)
   }
@@ -251,6 +263,7 @@ var createNewNote = () => {
     width: 300, height: 300, 
     posX: 0.8, posY: 0.2,
     ontop: false,
+    showOnstart: true,
   }
   fs.writeFileSync(config.path.root + config.path.category.app + config.path.category.notes + newId + '.note', '', 'utf8')
   catalog.push(newConfig)
