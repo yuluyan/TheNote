@@ -36,6 +36,7 @@ if (!fs.existsSync(config.path.root + config.path.category.app + config.path.fil
     posX: 0.8, posY: 0.2,
     ontop: true,
     showOnstart: true,
+    data: {},
   }]
   fs.writeFileSync(config.path.root + config.path.category.app + config.path.file.catalog, JSON.stringify(catalog), 'utf8')
   var tutoralNote = fs.readFileSync(config.path.root + config.path.category.app + config.path.file.tutorial, 'utf8')
@@ -264,6 +265,7 @@ var createNewNote = () => {
     posX: 0.8, posY: 0.2,
     ontop: false,
     showOnstart: true,
+    data: {},
   }
   fs.writeFileSync(config.path.root + config.path.category.app + config.path.category.notes + newId + '.note', '', 'utf8')
   catalog.push(newConfig)
@@ -324,6 +326,23 @@ var modifyCatalogEntryById = (id, keyword, value) => {
       }
     } else {
       debug('Key: ' + keyword + ' not exist')
+    }
+  } else {
+    debug('Id: ' + id + ' not exist')
+  }
+}
+
+var modifyCatalogDataEntryById = (id, keyword, value) => {
+  var targetId = getCatalogIndexById(id)
+  if (targetId >= 0) {
+    if (keyword in catalog[targetId].data) {
+      if (!((catalog[targetId].data)[keyword] == value)) {
+        (catalog[targetId].data)[keyword] = value
+        saveCatalog(catalog)
+      }
+    } else {
+      (catalog[targetId].data)[keyword] = value
+      saveCatalog(catalog)
     }
   } else {
     debug('Id: ' + id + ' not exist')
@@ -518,4 +537,13 @@ ipcMain.on('hideClicked', (e, msg) => {
 
 ipcMain.on('openlink', (e, msg) => {
   shell.openExternal(msg.link)
+})
+
+ipcMain.on('request-data', (e, msg) => {
+  var data = getCatalogEntryById(msg.id).data
+  e.sender.send('data-sent', data)
+})
+
+ipcMain.on('checkbox-change', (e, msg) => {
+  modifyCatalogDataEntryById(msg.id, 'checkboxs', msg.value)
 })

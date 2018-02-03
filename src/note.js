@@ -93,7 +93,6 @@ var confirmContent = () => {
       value: textbox.value
     })
   }
-
 }
 
 // When focus
@@ -204,6 +203,8 @@ var updateContentFromTextbox = () => {
       dateEntryUpdater(dateEntries[i].id)
     }
   }
+
+  requestNoteData()
 }
 
 var setWindowId = (id) => {
@@ -481,5 +482,36 @@ var dateEntryUpdater = function (id) {
 var openLink = (link) => {
   ipcRenderer.send('openlink', {
     link: link,
+  })
+}
+
+ipcRenderer.on('data-sent', (e, msg) => {
+  var data = msg
+  console.log(data)
+  loadCheckboxs(data.checkboxs)
+})
+
+var requestNoteData = () => {
+  ipcRenderer.send('request-data', {
+    id: getWindowId()
+  })
+}
+
+var loadCheckboxs = (flagArr) => {
+  var checkboxs = document.getElementsByClassName('notecheckbox')
+  for (var i = 0; i < checkboxs.length; i++) {
+    checkboxs[i].checked = flagArr[i] || false
+  }
+}
+
+var updateCheckboxs = () => {
+  var checkboxs = document.getElementsByClassName('notecheckbox')
+  var flagArr = []
+  for (var i = 0; i < checkboxs.length; i++) {
+    flagArr.push(checkboxs[i].checked)
+  }
+  ipcRenderer.send('checkbox-change', {
+    id: getWindowId(),
+    value: flagArr
   })
 }

@@ -285,7 +285,7 @@ var command = {
       usage: '!checkbox string',
       exec: (res, args, rest, linenumber) => {
         var id = uniqueID()
-        res.html = '<div>'
+        res.html = '<div onclick="updateCheckboxs()">'
         res.html += '<input type="checkbox" id="' + id + '" data-linenumber=' + linenumber + ' class="notecheckbox" />' 
         res.html += '<label data-linenumber=' + linenumber + ' class="notecheckboxlabel" for="' + id + '">'
         res.html += '<div><span>&#10004;</span></div>' + rest.replace(/\s/g, '&nbsp;')
