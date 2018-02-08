@@ -18,6 +18,8 @@
         } else {
           var $ = rlmhour.cheerio.load(pres.text)
           var resultStr = $('.libcalTable td:contains(Physics Mathematics Astronomy Library)')
+          resultStr = resultStr.closest('tr').next().children().first()
+          console.log(resultStr.html())
           for (var i = 0; i < week + 1; i++) {
             resultStr = resultStr.next()
           }
