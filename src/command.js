@@ -465,16 +465,36 @@ var command = {
     link: {
       argc: 'any',
       desp: 'Insert a link.',
-      usage: '!link href-string [display-string]',
+      usage: '!link "href-string" [display-string]',
       exec: (res, args, rest, linenumber) => {
-        if (args.length > 0) {
-          var href = args[0]
-          var display = args[0]
-          if (args[1]) display = rest.replace(href, '').trim().replace(/\s/g, '&nbsp;')
-          res.html = '<div><div onclick="openLink(\'' + href + '\')" title="' + href + '" data-linenumber=' + linenumber + ' class="notelink">' + display + "</div></div>"
-        } else {
-          var err = new ErrorInfo('link', 'A link should be provided.')
+        console.log(rest)
+        var href = rest.match(/"((?:\\.|[^"\\])*)"/g)
+        if (!href) {
+          var err = new ErrorInfo('link', 'A link should be provided in quote.')
           res.html = err.toHTML(linenumber)
+        } else {
+          href = href[0].replace(/"/g, "")
+          var display = rest.slice(rest.lastIndexOf('"') + 1).trim().replace(/\s/g, '&nbsp;')
+          if (display === "") display = href
+          res.html = '<div><div onclick="openLink(\'' + href + '\')" title="' + href + '" data-linenumber=' + linenumber + ' class="notelink">' + display + "</div></div>"
+        }
+      }
+    },
+    flink: {
+      argc: 'any',
+      desp: 'Insert a local file link.',
+      usage: '!flink "filepath-string" [display-string]',
+      exec: (res, args, rest, linenumber) => {
+        console.log(rest)
+        var href = rest.match(/"((?:\\.|[^"\\])*)"/g)
+        if (!href) {
+          var err = new ErrorInfo('flink', 'A file link should be provided in quote.')
+          res.html = err.toHTML(linenumber)
+        } else {
+          href = href[0].replace(/"/g, "").replace(/\\/g, "/")
+          var display = rest.slice(rest.lastIndexOf('"') + 1).trim().replace(/\s/g, '&nbsp;')
+          if (display === "") display = href
+          res.html = '<div><div onclick="openLink(\'file:///' + href + '\')" title="' + href + '" data-linenumber=' + linenumber + ' class="notelink">' + display + "</div></div>"
         }
       }
     },

@@ -1,7 +1,7 @@
 !notecolor 11
 Articles
-!link file:///C:/Users/luyan/Desktop/AQMC.pdf Approximate QMC
-!link https://zhuanlan.zhihu.com/p/33892171 QMC
+!link "file:///C:/Users/luyan/Desktop/AQMC.pdf" Approximate QMC
+!link "https://zhuanlan.zhihu.com/p/33892171" QMC
 Homework
-!link file:///D:/Courses%20UT/Course%20-%20Spring%202018/EM/Homework/hw06.pdf EM 
-!link file:///D:/Courses%20UT/Course%20-%20Spring%202018/CM/Midterm.pdf CM Midterm
+!flink "C:\Users\yuluy\Desktop\NodeJS\2 3" EM 
+!link "file:///D:/Courses UT/Course - Spring 2018/CM/Midterm.pdf" CM Midterm
