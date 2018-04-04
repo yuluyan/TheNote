@@ -25,7 +25,7 @@ Inline command starts with !, e.g. !sep. Inline command can usually followed by 
 \!date accepts various date formats:
 !date -18:00- Dinner
 \!link can insert a link:
-!link www.google.com Google (Click me!)
+!link "www.google.com" Google (Click me)!
 Some inline commands can include particular files:
 !htmlfile customs/html.html
 !jsfile customs/js.js
