@@ -2,7 +2,7 @@
   var clock = {
     clocks: [
       {"label": "Austin", "timezone": -6, "local": true},
-      {"label": "China", "timezone": 8, "local": false},
+      {"label": "China", "timezone": 7, "local": false},
       {"label": "Los Angeles", "timezone": -8, "local": false},
       {"label": "New York", "timezone": -5, "local": false}
     ],
