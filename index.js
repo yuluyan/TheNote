@@ -220,6 +220,14 @@ var showAllNotes = () => {
     showNote(catalog[i].id)
 }
 
+var toTopNote = () => {
+  for (var i = 0; i < catalog.length; i++) {
+    if (wins[i].isVisible()) {
+      wins[i].focus()
+    }
+  }
+}
+
 var hideNote = (id) => {
   if (wins[id] && wins[id].isVisible()) {
     wins[id].hide()
@@ -435,6 +443,7 @@ var initializeTray = (wins) => {
   tray.setToolTip('You have ' + catalog.length + ' note' + (catalog.length > 1 ? 's' : '') + '.')
   tray.setContextMenu(Menu.buildFromTemplate(templateTrayMenu))
   tray.on('double-click', showAllNotes)
+  tray.on('click', toTopNote)
 }
 
 var updateTray = (wins) => {
