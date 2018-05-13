@@ -482,7 +482,7 @@ var command = {
     },
     flink: {
       argc: 'any',
-      desp: 'Insert a local file link.',
+      desp: 'Insert a file link.',
       usage: '!flink "filepath-string" [display-string]',
       exec: (res, args, rest, linenumber) => {
         console.log(rest)
@@ -499,6 +499,36 @@ var command = {
       }
     },
     
+    image: {
+      argc: 'any',
+      desp: 'Insert a image link.',
+      usage: '!image "imagepath-string" [width] [height]',
+      exec: (res, args, rest, linenumber) => {
+        console.log(rest)
+        var href = rest.match(/"((?:\\.|[^"\\])*)"/g)
+        if (!href) {
+          var err = new ErrorInfo('image', 'A image link should be provided in quote.')
+          res.html = err.toHTML(linenumber)
+        } else {
+          href = href[0].replace(/"/g, "").replace(/\\/g, "/")
+          var dim = rest.slice(rest.lastIndexOf('"') + 1).trim().replace(/\s/g, '&nbsp;')
+          if (dim === "") {
+            res.html = '<div data-linenumber=' + linenumber + '><img src="' + href + '">' + "</img></div>"
+          } else {
+            dim = dim.split('&nbsp;')
+            if (dim.length === 1)
+              res.html = '<div data-linenumber=' + linenumber + '><img src="' + href + '" width=' + dim[0] + '>' + "</img></div>"
+            else if (dim.length === 2)
+              res.html = '<div data-linenumber=' + linenumber + '><img src="' + href + '" width=' + dim[0] + ' height=' + dim[1] + '>' + "</img></div>"
+            else {
+              var err = new ErrorInfo('image', 'Too much arguments')
+              res.html = err.toHTML(linenumber)
+            }
+          }
+        }
+      }
+    },
+
     // get command usage
     help: {
       argc: [1],
