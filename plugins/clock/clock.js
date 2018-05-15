@@ -6,7 +6,7 @@
       {"label": "Los Angeles", "timezone": -8, "local": false},
       {"label": "New York", "timezone": -5, "local": false}
     ],
-    updateInterval: 100,
+    updateInterval: 10,
     timer: null,
     clearTimer: () => {
       clearTimeout(clock.timer)
