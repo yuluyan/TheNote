@@ -76,7 +76,7 @@
       inputA.className = 'unitinput'
       inputA.type = 'number'
       inputA.addEventListener('keyup', (e) => {
-        inputB.value = e.target.value * unit.factor
+        inputB.value = uc.trunc(e.target.value * unit.factor)
       })
       var labelA = document.createElement('label')
       labelA.className = 'unitlabel'
@@ -90,7 +90,7 @@
       inputB.className = 'unitinput'
       inputB.type = 'number'
       inputB.addEventListener('keyup', (e) => {
-        inputA.value = e.target.value / unit.factor
+        inputA.value = uc.trunc(e.target.value / unit.factor)
       })
       var labelB = document.createElement('label')
       labelB.className = 'unitlabel'
@@ -113,6 +113,23 @@
         uc.generateConverter(uc.units[i])
       }
     },
+
+    trunc: (num) => {
+      var sign = Math.sign(num)
+      var num = Math.abs(num)
+      if (num == 0) {
+        return 0
+      } else if (num >= 1) {
+        return sign * uc.keepDigits(num, 2)
+      } else {
+        var digit = parseInt( - Math.log10(num))
+        return sign * uc.keepDigits(num, digit + 3)
+      }
+
+    },
+    keepDigits: (num, digit) => {
+      return parseInt(num * Math.pow(10, digit)) / Math.pow(10, digit)
+    }
   }
   uc.init()
 })()
