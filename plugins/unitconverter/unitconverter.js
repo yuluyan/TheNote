@@ -1,74 +1,58 @@
 (function() {
   var uc = {
+    superagent: require("superagent"),
     units: [
       {
-        "unitA": {
-          "name": "mile",
-          "abbr": "mi",
-          "plural": "miles"
-        },
-        "unitB": {
-          "name": "kilometer",
-          "abbr": "km",
-          "plural": "kilometers"
-        },
+        "unitA": "mi",
+        "unitB": "km",
         "factor": 1.60934
       },
       {
-        "unitA": {
-          "name": "inch",
-          "abbr": "in",
-          "plural": "inches"
-        },
-        "unitB": {
-          "name": "centimeter",
-          "abbr": "cm",
-          "plural": "centimeters"
-        },
+        "unitA": "in",
+        "unitB": "cm",
         "factor": 2.54
       },
       {
-        "unitA": {
-          "name": "foot",
-          "abbr": "ft",
-          "plural": "feet"
-        },
-        "unitB": {
-          "name": "meter",
-          "abbr": "m",
-          "plural": "meters"
-        },
+        "unitA": "ft",
+        "unitB": "m",
         "factor": 0.3048
       },
       {
-        "unitA": {
-          "name": "pound",
-          "abbr": "lbs",
-          "plural": "pounds"
-        },
-        "unitB": {
-          "name": "kilogram",
-          "abbr": "kg",
-          "plural": "kilograms"
-        },
+        "unitA": "lbs",
+        "unitB": "kg",
         "factor": 0.453592
       },
       {
-        "unitA": {
-          "name": "ounce",
-          "abbr": "oz",
-          "plural": "ounces"
-        },
-        "unitB": {
-          "name": "gram",
-          "abbr": "g",
-          "plural": "grams"
-        },
+        "unitA": "oz",
+        "unitB": "g",
         "factor": 28.3495
+      },
+      {
+        "unitA": "$",
+        "unitB": "&yen;",
+        "factor": (callback) => {
+          uc.superagent.get("http://free.currencyconverterapi.com/api/v5/convert?q=USD_CNY&compact=y").end(function(err,pres){
+            var factor  
+            if (err) {
+              console.error('currency failed.')
+              factor = 6.409503
+            } else {
+              factor = JSON.parse(pres.text).USD_CNY.val
+            }
+            callback(factor)
+          });
+        }
       }
     ],
 
     generateConverter: (unit) => {
+      var callfactor
+      if (typeof unit.factor === "function") {
+        callfactor = unit.factor
+      } else {
+        callfactor = (callback) => {callback(unit.factor)}
+      }
+      
       var unitDiv = document.createElement('div')
       unitDiv.className = 'unitdiv'
       
@@ -76,11 +60,11 @@
       inputA.className = 'unitinput'
       inputA.type = 'number'
       inputA.addEventListener('keyup', (e) => {
-        inputB.value = uc.trunc(e.target.value * unit.factor)
+        callfactor((f) => {inputB.value = uc.trunc(e.target.value * f)})
       })
       var labelA = document.createElement('label')
       labelA.className = 'unitlabel'
-      labelA.innerHTML = unit.unitA.abbr
+      labelA.innerHTML = unit.unitA
 
       var eq = document.createElement('span')
       eq.innerHTML = '='
@@ -90,11 +74,11 @@
       inputB.className = 'unitinput'
       inputB.type = 'number'
       inputB.addEventListener('keyup', (e) => {
-        inputA.value = uc.trunc(e.target.value / unit.factor)
+        callfactor((f) => {inputA.value = uc.trunc(e.target.value / f)})
       })
       var labelB = document.createElement('label')
       labelB.className = 'unitlabel'
-      labelB.innerHTML = unit.unitB.abbr
+      labelB.innerHTML = unit.unitB
 
       unitDiv.appendChild(inputA)
       unitDiv.appendChild(labelA)      
