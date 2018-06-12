@@ -28,6 +28,15 @@
         "factor": 28.3495
       },
       {
+        "unitA": "&#8451",
+        "unitB": "&#8457",
+        "convertor": {
+          "type": "direct",
+          "AtoB": (a) => {return a * 1.8 + 32},
+          "BtoA": (b) => {return (b - 32) / 1.8}
+        },
+      },
+      {
         "unitA": "$",
         "unitB": "&yen;",
         "factor": (callback) => {
@@ -46,22 +55,13 @@
     ],
 
     generateConverter: (unit) => {
-      var callfactor
-      if (typeof unit.factor === "function") {
-        callfactor = unit.factor
-      } else {
-        callfactor = (callback) => {callback(unit.factor)}
-      }
-      
       var unitDiv = document.createElement('div')
       unitDiv.className = 'unitdiv'
       
       var inputA = document.createElement('input')
       inputA.className = 'unitinput'
       inputA.type = 'number'
-      inputA.addEventListener('keyup', (e) => {
-        callfactor((f) => {inputB.value = uc.trunc(e.target.value * f)})
-      })
+      
       var labelA = document.createElement('label')
       labelA.className = 'unitlabel'
       labelA.innerHTML = unit.unitA
@@ -73,9 +73,7 @@
       var inputB = document.createElement('input')
       inputB.className = 'unitinput'
       inputB.type = 'number'
-      inputB.addEventListener('keyup', (e) => {
-        callfactor((f) => {inputA.value = uc.trunc(e.target.value / f)})
-      })
+      
       var labelB = document.createElement('label')
       labelB.className = 'unitlabel'
       labelB.innerHTML = unit.unitB
@@ -89,6 +87,42 @@
       var grid = document.getElementById('unitconverter')
       var floatclear = document.getElementById('floatclear')
       grid.insertBefore(unitDiv, floatclear)
+
+
+      
+      if (typeof unit.convertor !== 'undefined') {
+        // convertor
+        var callconvertorAtoB, callconvertorBtoA
+        if (unit.convertor.type === "callback") {
+          callconvertorAtoB = unit.convertor.AtoB
+          callconvertorBtoA = unit.convertor.BtoA
+        } else if (unit.convertor.type === "direct") {
+          callconvertorAtoB = (callback) => {callback(unit.convertor.AtoB)}
+          callconvertorBtoA = (callback) => {callback(unit.convertor.BtoA)}
+        }
+        inputA.addEventListener('keyup', (e) => {
+          callconvertorAtoB((f) => {inputB.value = uc.trunc(f(e.target.value))})
+        })
+        inputB.addEventListener('keyup', (e) => {
+          callconvertorBtoA((f) => {inputA.value = uc.trunc(f(e.target.value))})
+        })
+      } else {
+        // factor
+        var callfactor
+        if (typeof unit.factor === "function") {
+          callfactor = unit.factor
+        } else {
+          callfactor = (callback) => {callback(unit.factor)}
+        }
+        inputA.addEventListener('keyup', (e) => {
+          callfactor((f) => {inputB.value = uc.trunc(e.target.value * f)})
+        })
+        inputB.addEventListener('keyup', (e) => {
+          callfactor((f) => {inputA.value = uc.trunc(e.target.value / f)})
+        })
+      }
+      
+      
     },
 
     init: () => {
