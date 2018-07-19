@@ -17,13 +17,15 @@ May 3rd 5:00pm lecture
 Commands are used to modify note in a non-text way. There are two types of command, block and inline. 
 
 !h4 Inline command
-Inline command starts with !, e.g. !sep. Inline command can usually followed by arguments, e.g., !sep n draws n separator. 
+Inline command starts with !, e.g. '!sep'. Inline command can usually be followed by arguments, e.g., '!sep n' draws n separator. 
 \!checkbox can insert a check box:
 !checkbox To-do item
+
 \!date can insert a date object:
 !date -October 1- National holiday
 \!date accepts various date formats:
 !date -18:00- Dinner
+
 \!link can insert a link:
 !link "www.google.com" Google (Click me)!
 Some inline commands can include particular files:
@@ -31,7 +33,7 @@ Some inline commands can include particular files:
 !jsfile customs/js.js
 !cssfile customs/css.css
 For help of an inline command, you can use !help to get information:
-!help help
+!help help 
 
 !sep
 !h4 Block command
