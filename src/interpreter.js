@@ -12,7 +12,7 @@ var interpreter = (text) => {
   while (textArray.length > 0) {
     if (isEmptyLine(textArray[0])) {
       textArray.splice(0, 1)
-    } if (textArray.length > 0 && isEmptyLine(textArray[textArray.length - 1])) {
+    } else if (textArray.length > 0 && isEmptyLine(textArray[textArray.length - 1])) {
       textArray.splice(-1, 1)
     } else {
       break

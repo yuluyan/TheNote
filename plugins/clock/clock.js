@@ -52,10 +52,11 @@
       if (hh >= 24) {
         ret.h = hh - 24
         ret.dayoffset = '+1'
-      }
-      if (hh < 0) {
+      } else if (hh < 0) {
         ret.h = hh + 24
         ret.dayoffset = '-1'
+      } else {
+        ret.dayoffset = 0
       }
       return ret
     },
