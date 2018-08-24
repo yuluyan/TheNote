@@ -4,7 +4,7 @@
     cheerio: require("cheerio"),
     url: 'https://www.utrecsports.org/hours',
     timer: null,
-    updateInterval: 5000,
+    updateInterval: 10000,
     routine: () => {
       var today = new Date()
       var week = today.getDay()
@@ -18,6 +18,9 @@
         } else {
           var $ = gymhour.cheerio.load(res.text)
           var resultStr
+          resultStr = $('td:contains(Gregory)').next()
+          console.log(resultStr)
+          /*
           switch (week) {
             case 0: //sunday
               resultStr = $('#large-only td:contains(Gre)').next().next().next().next()
@@ -32,6 +35,7 @@
               resultStr = $('#large-only td:contains(Gre)').next()
               break
           }
+          */
           var startDiv = document.getElementById('gymstart')
           var endDiv = document.getElementById('gymend')
           var explainDiv = document.getElementById('gymstatus')
