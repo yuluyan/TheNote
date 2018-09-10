@@ -16,7 +16,7 @@
 }
 .unitinput {
   font-family: 'digital-clock-font';
-  font-size: 30px;
+  font-size: 20px;
   width: 35%;
 
   border: 2px solid white; 
@@ -37,28 +37,30 @@
 .unitlabel {
   text-align: right;
   display: inline-block;
-  width: 8%;
-  min-width: 32px; 
+  width: 7%;
+  min-width: 6px; 
   padding-left: 1px;
-  font-size: 25px;
+  font-size: 15px;
+  font-weight: bold;
   color: gray;
   position: relative;
   left:-10%;
+  top:-2%;
 }
 
 .eqlabel {
   text-align: center;
   display: inline-block;
-  width: 40px;
-  height: 40px;
+  width: 25px;
+  height: 25px;
   margin-right: 10px;
-  font-size: 30px;
+  font-size: 20px;
   font-weight: bolder;
   border-radius: 50%;
   color: #fff;
   background: var(--deep-color);
   position: relative;
-  left:-3.5%;
+  left:-1.5%;
 }
 
 .floatclear {

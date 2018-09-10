@@ -459,7 +459,7 @@ var command = {
       desp: 'Hide secret text.',
       usage: '!password string',
       exec: (res, args, rest, linenumber) => {
-        res.html += '<p data-linenumber=' + linenumber + '>' + rest.replace(/./g, '*') + '</p>'
+        res.html += '<div><div data-linenumber=' + linenumber + ' class="notepwd">' + rest.replace(/./g, '*') + '</div></div>'
       }
     },
     link: {
