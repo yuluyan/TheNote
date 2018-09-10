@@ -1,9 +1,9 @@
-!notecolor 17
+!notecolor 12
 !plugin clock
 
 !plugin weather
 
-!sep 2
+!sep 1
 
 !plugin gymhour
 !plugin rmlhour
